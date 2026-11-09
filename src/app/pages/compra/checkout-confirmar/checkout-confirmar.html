@@ -1,0 +1,112 @@
+<div class="contenedor pagina">
+  <h1 class="sr-only">Pago: confirmar pedido</h1>
+  <pasos-checkout [actual]="3" />
+
+  <div class="checkout">
+    <div class="revision">
+      <section class="tarjeta" aria-labelledby="titulo-productos">
+        <h2 id="titulo-productos" class="titulo-3">Productos</h2>
+        <div class="tabla-envoltura">
+          <table class="tabla">
+            <thead>
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col" class="num">Cantidad</th>
+                <th scope="col" class="num">Importe</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of productos; track item.nombre) {
+              <tr>
+                <td>
+                  <div class="producto">
+                    <img
+                      class="miniatura"
+                      [src]="item.imagen"
+                      [alt]="item.nombre"
+                      width="48"
+                      height="48"
+                    />
+                    <span
+                      ><strong>{{ item.nombre }}</strong>@if (item.detalle) {
+                      <br /><span class="pequeno texto-sec"
+                        >{{ item.detalle }}</span
+                      >
+                      }</span
+                    >
+                  </div>
+                </td>
+                <td class="num">{{ item.cantidad }}</td>
+                <td class="num">
+                  {{ item.precio * item.cantidad | currency: 'MXN' :
+                  'symbol-narrow' }}
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="fila-2">
+        <section class="tarjeta dato" aria-labelledby="titulo-envio">
+          <header>
+            <h2 id="titulo-envio" class="titulo-3">
+              <app-icono nombre="ubicacion" [tamano]="18" /> Envío
+            </h2>
+            <a routerLink="/checkout/direccion" class="pequeno">Cambiar</a>
+          </header>
+          <address>
+            <strong>{{ direccion.receptor }}</strong><br />
+            {{ direccion.calle }}<br />
+            {{ direccion.ciudad }}<br />
+            Tel. {{ direccion.telefono }}
+          </address>
+          <p class="pequeno texto-sec">Envío estándar · 3 a 5 días hábiles</p>
+        </section>
+        <section class="tarjeta dato" aria-labelledby="titulo-metodo">
+          <header>
+            <h2 id="titulo-metodo" class="titulo-3">
+              <app-icono nombre="tarjeta" [tamano]="18" /> Pago
+            </h2>
+            <a routerLink="/checkout/pago" class="pequeno">Cambiar</a>
+          </header>
+          <p><strong>Visa terminación 4242</strong></p>
+          <p class="pequeno texto-sec">Carlos Ramírez López · vence 08/29</p>
+        </section>
+      </div>
+    </div>
+
+    <aside class="tarjeta total" aria-labelledby="titulo-total">
+      <h2 id="titulo-total" class="titulo-3">Total a pagar</h2>
+      <dl>
+        <div>
+          <dt>Subtotal</dt>
+          <dd>{{ resumen.subtotal | currency: 'MXN' : 'symbol-narrow' }}</dd>
+        </div>
+        <div>
+          <dt>Envío</dt>
+          <dd>{{ resumen.envio | currency: 'MXN' : 'symbol-narrow' }}</dd>
+        </div>
+        <div class="gran-total">
+          <dt>Total</dt>
+          <dd>{{ resumen.total | currency: 'MXN' : 'symbol-narrow' }}</dd>
+        </div>
+      </dl>
+      <form (submit)="$event.preventDefault()">
+        <label class="casilla"
+          ><input type="checkbox" name="terminos" required /> Acepto los
+          <a routerLink="/ayuda">términos y condiciones</a> y el aviso de
+          privacidad</label
+        >
+        <a routerLink="/pago/procesando" class="btn btn-primario btn-bloque"
+          ><app-icono nombre="candado" [tamano]="16" /> Pagar {{ resumen.total |
+          currency: 'MXN' : 'symbol-narrow' }}</a
+        >
+      </form>
+      <a routerLink="/checkout/pago" class="btn btn-fantasma btn-bloque"
+        >Volver</a
+      >
+    </aside>
+  </div>
+</div>
