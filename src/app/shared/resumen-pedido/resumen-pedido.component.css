@@ -1,0 +1,13 @@
+.resumen { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 100px; }
+h2 { display: flex; align-items: center; gap: 10px; }
+.productos { list-style: none; margin: 0; padding: 0 0 16px; display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--borde); }
+.productos li { display: grid; grid-template-columns: 48px 1fr auto; gap: 10px; align-items: center; }
+.productos img { width: 48px; height: 48px; object-fit: cover; background: var(--fondo-sutil); }
+.productos strong { display: block; font-size: 13px; }
+.importe { font-size: 13px; font-weight: 700; }
+dl { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+dt { color: var(--texto-sec); }
+dd { margin: 0; font-weight: 700; }
+.total { border-top: 1px solid var(--borde); padding-top: 14px; }
+.total dt { color: var(--texto); font-weight: 700; }
+.total dd { font-family: var(--f-titulo); font-size: 24px; font-weight: 500; }

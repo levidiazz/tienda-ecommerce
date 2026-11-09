@@ -1,0 +1,41 @@
+<article class="tarjeta-producto">
+  <a class="imagen" [routerLink]="['/producto', producto().slug]">
+    <img [src]="producto().imagenes[0]" [alt]="producto().nombre" loading="lazy" width="400" height="440">
+    @if (producto().agotado) {
+      <span class="insignia insignia-oscura marca">Agotado</span>
+    } @else if (descuento() > 0) {
+      <span class="insignia insignia-acento marca">−{{ descuento() }} %</span>
+    } @else if (producto().tipo === 'mayores') {
+      <span class="insignia insignia-oscura marca">+18</span>
+    }
+  </a>
+  <button type="button" class="favorito" [class.activo]="favorito()" [attr.aria-pressed]="favorito()" aria-label="Guardar en favoritos">
+    <app-icono nombre="corazon" [tamano]="18" [relleno]="favorito()" />
+  </button>
+
+  <h3 class="nombre"><a [routerLink]="['/producto', producto().slug]">{{ producto().nombre }}</a></h3>
+  <app-estrellas [valor]="producto().calificacion" [texto]="'(' + producto().resenas + ')'" />
+  <p class="precios">
+    <span class="precio">{{ producto().precio | currency: 'MXN' : 'symbol-narrow' }}</span>
+    @if (producto().precioAnterior) {
+      <del class="pequeno texto-sec">{{ producto().precioAnterior | currency: 'MXN' : 'symbol-narrow' }}</del>
+    }
+  </p>
+
+  <div class="acciones">
+    <a class="btn-icono" [routerLink]="['/producto', producto().slug]" [attr.aria-label]="'Ver detalle de ' + producto().nombre">
+      <app-icono nombre="ojo" [tamano]="18" />
+    </a>
+    @if (producto().agotado) {
+      <button type="button" class="control agotado" disabled>Agotado</button>
+    } @else if (textoOpcion()) {
+      <a class="control elegir" [routerLink]="['/producto', producto().slug]">
+        <app-icono nombre="carrito" [tamano]="16" /> {{ textoOpcion() }}
+      </a>
+    } @else {
+      <a class="control agregar" routerLink="/carrito" [attr.aria-label]="'Agregar ' + producto().nombre + ' al carrito'">
+        <app-icono nombre="carrito" [tamano]="18" /><app-icono nombre="mas" [tamano]="16" />
+      </a>
+    }
+  </div>
+</article>

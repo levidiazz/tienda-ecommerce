@@ -1,0 +1,23 @@
+<aside class="tarjeta resumen" aria-labelledby="titulo-resumen">
+  <h2 id="titulo-resumen" class="titulo-3"><app-icono nombre="recibo" [tamano]="20" /> Resumen del pedido</h2>
+  @if (mostrarProductos()) {
+    <ul class="productos">
+      @for (item of productos; track item.nombre) {
+        <li>
+          <img [src]="item.imagen" [alt]="item.nombre" width="48" height="48">
+          <div>
+            <strong>{{ item.nombre }}</strong>
+            <span class="pequeno texto-sec">@if (item.detalle) { {{ item.detalle }} · }{{ item.cantidad }} × {{ item.precio | currency: 'MXN' : 'symbol-narrow' }}</span>
+          </div>
+          <span class="importe">{{ item.cantidad * item.precio | currency: 'MXN' : 'symbol-narrow' }}</span>
+        </li>
+      }
+    </ul>
+  }
+  <dl>
+    <div class="fila-resumen"><dt>Subtotal ({{ resumen.productos }} productos)</dt><dd>{{ resumen.subtotal | currency: 'MXN' : 'symbol-narrow' }}</dd></div>
+    <div class="fila-resumen"><dt>Envío</dt><dd>{{ resumen.envio | currency: 'MXN' : 'symbol-narrow' }}</dd></div>
+    <div class="fila-resumen total"><dt>Total</dt><dd>{{ resumen.total | currency: 'MXN' : 'symbol-narrow' }}</dd></div>
+  </dl>
+  <ng-content />
+</aside>
