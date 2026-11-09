@@ -1,0 +1,35 @@
+<div class="contenedor pagina cuenta">
+  <aside class="menu-cuenta" aria-label="Mi cuenta">
+    <div class="perfil">
+      <span class="avatar" aria-hidden="true">CR</span>
+      <div>
+        <strong>Carlos Ramírez López</strong>
+        <span class="pequeno texto-sec">carlos&#64;correo.com</span>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        @for (enlace of enlaces; track enlace.ruta) {
+        <li>
+          <a
+            [routerLink]="enlace.ruta"
+            routerLinkActive="activo"
+            ariaCurrentWhenActive="page"
+          >
+            <app-icono [nombre]="enlace.icono" [tamano]="18" /> {{ enlace.texto
+            }}
+          </a>
+        </li>
+        }
+        <li>
+          <a routerLink="/cuenta/iniciar-sesion"
+            ><app-icono nombre="salir" [tamano]="18" /> Cerrar sesión</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <div class="cuenta__contenido">
+    <router-outlet />
+  </div>
+</div>
