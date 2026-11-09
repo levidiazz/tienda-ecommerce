@@ -1,0 +1,32 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+legend {
+  margin-bottom: 16px;
+}
+.direcciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+.titulo-direccion {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.agregar {
+  align-self: flex-start;
+}
+@media (max-width: 700px) {
+  .direcciones {
+    grid-template-columns: 1fr;
+  }
+}
