@@ -4,7 +4,6 @@ import {  Component, output } from '@angular/core';
   selector: 'formulario-direccion',
   imports: [],
   templateUrl: './formulario-direccion.html',
-  styleUrl: './formulario-direccion.css'
 })
 export class FormularioDireccion {
   guardar = output<void>();
