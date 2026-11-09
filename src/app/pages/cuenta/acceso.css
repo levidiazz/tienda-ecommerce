@@ -1,0 +1,11 @@
+.acceso { display: flex; justify-content: center; padding-top: 56px; padding-bottom: 80px; }
+.acceso__tarjeta { width: 100%; max-width: 460px; border: 1px solid var(--borde); padding: 36px; display: flex; flex-direction: column; gap: 20px; }
+.acceso__tarjeta.ancha { max-width: 560px; }
+.acceso__tarjeta header { display: flex; flex-direction: column; gap: 6px; text-align: center; }
+.acceso__fila { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; }
+.acceso__fila a, .acceso__pie a { text-decoration: underline; font-weight: 700; }
+.acceso__pie { text-align: center; font-size: 14px; }
+.separador { display: flex; align-items: center; gap: 12px; color: var(--texto-sec); font-size: 12px; }
+.separador::before, .separador::after { content: ''; flex: 1; height: 1px; background: var(--borde); }
+.campo-clave { position: relative; }
+@media (max-width: 600px) { .acceso__tarjeta { padding: 24px 18px; border: 0; } .acceso { padding-top: 24px; } }

@@ -1,0 +1,17 @@
+<div class="contenedor acceso">
+  <section class="acceso__tarjeta" aria-labelledby="titulo-recuperar">
+    <header>
+      <h1 id="titulo-recuperar" class="titulo-1">Recuperar contraseña</h1>
+      <p class="texto-sec">Escribe tu correo y te enviaremos un enlace para crear una nueva.</p>
+    </header>
+    <form class="formulario" (submit)="$event.preventDefault()">
+      <div class="campo">
+        <label for="rec-correo">Correo electrónico *</label>
+        <input id="rec-correo" name="correo" type="email" autocomplete="email" maxlength="150" required>
+      </div>
+      <button type="submit" class="btn btn-primario btn-bloque">Enviar enlace</button>
+    </form>
+    <p class="aviso aviso-exito"><app-icono nombre="correo" [tamano]="18" /> Si el correo está registrado, recibirás el enlace en unos minutos.</p>
+    <p class="acceso__pie"><a routerLink="/cuenta/iniciar-sesion">Volver a iniciar sesión</a></p>
+  </section>
+</div>

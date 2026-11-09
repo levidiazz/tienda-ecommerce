@@ -1,0 +1,26 @@
+<div class="contenedor acceso">
+  <section class="acceso__tarjeta" aria-labelledby="titulo-sesion">
+    <header>
+      <h1 id="titulo-sesion" class="titulo-1">Iniciar sesión</h1>
+      <p class="texto-sec">Entra para ver tus pedidos y comprar más rápido.</p>
+    </header>
+    <form class="formulario" (submit)="$event.preventDefault()">
+      <div class="campo">
+        <label for="sesion-correo">Correo electrónico *</label>
+        <input id="sesion-correo" name="correo" type="email" autocomplete="email" maxlength="150" required>
+      </div>
+      <div class="campo">
+        <label for="sesion-clave">Contraseña *</label>
+        <input id="sesion-clave" name="contrasena" type="password" autocomplete="current-password" minlength="8" required>
+      </div>
+      <div class="acceso__fila">
+        <label class="casilla"><input type="checkbox" name="recordar"> Recordarme</label>
+        <a routerLink="/cuenta/recuperar">¿Olvidaste tu contraseña?</a>
+      </div>
+      <a routerLink="/cuenta/pedidos" class="btn btn-primario btn-bloque">Entrar</a>
+    </form>
+    <p class="separador">o</p>
+    <a routerLink="/admin/dashboard" class="btn btn-secundario btn-bloque">Entrar como administrador</a>
+    <p class="acceso__pie">¿No tienes cuenta? <a routerLink="/cuenta/registro">Crear cuenta</a></p>
+  </section>
+</div>
