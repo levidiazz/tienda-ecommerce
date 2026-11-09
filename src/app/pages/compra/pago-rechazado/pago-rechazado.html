@@ -1,0 +1,28 @@
+<section class="contenedor pagina resultado" aria-labelledby="titulo-rechazado">
+  <span class="icono-resultado error"
+    ><app-icono nombre="x-circulo" [tamano]="40"
+  /></span>
+  <h1 id="titulo-rechazado" class="titulo-1">No pudimos procesar tu pago</h1>
+  <p class="texto-sec">
+    Tu banco rechazó la operación. No se hizo ningún cargo y tu carrito sigue
+    guardado.
+  </p>
+  <div class="aviso aviso-error detalle-error" role="alert">
+    <app-icono nombre="alerta" [tamano]="18" />
+    <span
+      >Motivo: fondos insuficientes (código 51). Revisa con tu banco o intenta
+      con otro método.</span
+    >
+  </div>
+  <ul class="sugerencias">
+    <li>Verifica el número, la fecha de vencimiento y el CVV.</li>
+    <li>Confirma que tu tarjeta tenga habilitadas las compras en línea.</li>
+    <li>Prueba pagar con PayPal.</li>
+  </ul>
+  <div class="acciones">
+    <a routerLink="/checkout/pago" class="btn btn-primario"
+      >Intentar de nuevo</a
+    >
+    <a routerLink="/carrito" class="btn btn-secundario">Volver al carrito</a>
+  </div>
+</section>

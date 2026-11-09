@@ -1,0 +1,42 @@
+<section class="contenedor pagina resultado" aria-labelledby="titulo-aprobado">
+  <span class="icono-resultado exito"
+    ><app-icono nombre="check-circulo" [tamano]="40"
+  /></span>
+  <h1 id="titulo-aprobado" class="titulo-1">¡Gracias por tu compra!</h1>
+  <p class="texto-sec">
+    Tu pago fue aprobado. Te enviamos la confirmación a
+    carlos.ramirez&#64;correo.com
+  </p>
+  <dl class="tarjeta detalle">
+    <div>
+      <dt>Pedido</dt>
+      <dd>#000006</dd>
+    </div>
+    <div>
+      <dt>Fecha</dt>
+      <dd>13 oct 2026</dd>
+    </div>
+    <div>
+      <dt>Método</dt>
+      <dd>Visa ···· 4242</dd>
+    </div>
+    <div>
+      <dt>Autorización</dt>
+      <dd>AUT-583921</dd>
+    </div>
+    <div>
+      <dt>Entrega estimada</dt>
+      <dd>16 – 18 oct 2026</dd>
+    </div>
+    <div class="total">
+      <dt>Total pagado</dt>
+      <dd>{{ resumen.total | currency: 'MXN' : 'symbol-narrow' }}</dd>
+    </div>
+  </dl>
+  <div class="acciones">
+    <a routerLink="/cuenta/pedidos/000006" class="btn btn-primario"
+      >Ver mi pedido</a
+    >
+    <a routerLink="/catalogo" class="btn btn-secundario">Seguir comprando</a>
+  </div>
+</section>
