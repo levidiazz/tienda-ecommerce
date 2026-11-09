@@ -1,0 +1,69 @@
+<section class="contenedor hero-envoltura" aria-labelledby="titulo-hero">
+  <div class="hero">
+    <img class="hero__imagen" src="img/hero.jpg" alt="" width="1584" height="672">
+    <div class="hero__texto">
+      <p class="hero__previo">Temporada de Muertos</p>
+      <h1 id="titulo-hero"><span class="acento">Hasta 30 %</span> de descuento</h1>
+      <p>Ropa, electrónica, hogar y productos regionales con envío a todo México.</p>
+      <div class="hero__botones">
+        <a class="btn hero__btn-claro" routerLink="/catalogo">Comprar ahora</a>
+        <a class="btn hero__btn-borde" routerLink="/ofertas">Ver ofertas</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contenedor seccion" aria-labelledby="titulo-categorias">
+  <div class="seccion__cabecera">
+    <h2 id="titulo-categorias" class="titulo-2">Compra por categoría</h2>
+    <a routerLink="/catalogo" class="ver-todo">Ver todas ›</a>
+  </div>
+  <ul class="mosaico">
+    @for (c of mosaico; track c.slug) {
+      <li>
+        <a class="mosaico__tile" routerLink="/catalogo" [queryParams]="{ categoria: c.slug }">
+          <span class="mosaico__texto">
+            <span class="mosaico__nombre">{{ c.nombre }}</span>
+            <span class="mosaico__ver">Ver más →</span>
+          </span>
+          <img [src]="c.imagen" alt="" loading="lazy" width="400" height="400">
+        </a>
+      </li>
+    }
+  </ul>
+  <a class="regalo" routerLink="/producto/tarjeta-regalo">
+    <span class="regalo__texto">
+      <span class="etiqueta-mayus">Producto digital</span>
+      <span class="regalo__titulo">Tarjetas de regalo</span>
+      <span>Llegan por correo en minutos, sin costo de envío.</span>
+      <span class="script">Regalar ahora →</span>
+    </span>
+    <img src="img/tarjeta-regalo.jpg" alt="" loading="lazy" width="320" height="200">
+  </a>
+</section>
+
+<section class="contenedor seccion" aria-labelledby="titulo-destacados">
+  <div class="seccion__cabecera">
+    <h2 id="titulo-destacados" class="titulo-2">Ofertas y destacados</h2>
+    <a routerLink="/ofertas" class="ver-todo">Ver todo ›</a>
+  </div>
+  <div class="rejilla-productos">
+    @for (p of destacados; track p.sku) {
+      <app-tarjeta-producto [producto]="p" />
+    }
+  </div>
+</section>
+
+<section class="contenedor seccion" aria-label="Beneficios">
+  <ul class="beneficios">
+    @for (b of beneficios; track b.titulo) {
+      <li class="beneficio">
+        <span class="beneficio__icono"><app-icono [nombre]="b.icono" /></span>
+        <span>
+          <strong>{{ b.titulo }}</strong>
+          <span class="pequeno texto-sec">{{ b.texto }}</span>
+        </span>
+      </li>
+    }
+  </ul>
+</section>
