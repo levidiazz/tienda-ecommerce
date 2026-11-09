@@ -1,0 +1,14 @@
+.pie { background: var(--fondo-oscuro); color: var(--texto-inv); padding: 48px 0 24px; }
+.rejilla { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 32px; }
+.marca p { margin-top: 16px; font-size: 13px; color: rgba(255, 255, 255, .7); max-width: 300px; }
+.logo { width: 150px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border: 1px dashed rgba(255, 255, 255, .5); color: rgba(255, 255, 255, .7); font-family: var(--f-titulo); font-size: 12px; letter-spacing: .3em; }
+h2 { font-family: var(--f-texto); font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: rgba(255, 255, 255, .75); }
+address { font-style: normal; }
+a:hover { color: var(--texto-inv); text-decoration: underline; }
+.pagos { display: flex; gap: 10px; }
+.derechos { margin-top: 36px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .15); font-size: 12px; color: rgba(255, 255, 255, .5); }
+@media (max-width: 900px) {
+  .rejilla { grid-template-columns: 1fr 1fr; }
+  .marca { grid-column: 1 / -1; }
+}

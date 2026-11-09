@@ -1,0 +1,68 @@
+<div class="barra-superior">
+  <div class="contenedor barra-superior__fila">
+    <ul class="contacto" aria-label="Contacto">
+      <li><a href="tel:+529511000000" class="circulo" aria-label="Llamar"><app-icono nombre="chat" [tamano]="12" /></a></li>
+      <li><a href="mailto:contacto&#64;tutienda.mx" class="circulo" aria-label="Enviar correo"><app-icono nombre="correo" [tamano]="12" /></a></li>
+      <li><span class="circulo" aria-label="Oaxaca, México"><app-icono nombre="ubicacion" [tamano]="12" /></span></li>
+    </ul>
+    <p>Envío a todo México · Paga con tarjeta o PayPal</p>
+    <div class="idioma">
+      <label class="sr-only" for="idioma">Idioma</label>
+      <select id="idioma"><option>Español</option><option>English</option></select>
+      <label class="sr-only" for="moneda">Moneda</label>
+      <select id="moneda"><option>MXN</option><option>USD</option></select>
+    </div>
+  </div>
+</div>
+
+<header class="barra-principal">
+  <div class="contenedor barra-principal__fila">
+    <button type="button" class="hamburguesa" (click)="alternarMenu()" [attr.aria-expanded]="menuAbierto()" aria-controls="menu-principal" aria-label="Abrir menú">
+      <app-icono nombre="menu" [tamano]="24" />
+    </button>
+
+    <a routerLink="/" class="logo" aria-label="Ir al inicio">LOGO</a>
+
+    <nav id="menu-principal" class="navegacion" [class.abierta]="menuAbierto()" aria-label="Principal">
+      <div class="navegacion__cabecera">
+        <span class="logo">LOGO</span>
+        <button type="button" (click)="cerrarMenu()" aria-label="Cerrar menú"><app-icono nombre="cerrar" [tamano]="22" /></button>
+      </div>
+      <ul>
+        @for (enlace of enlaces; track enlace.texto) {
+          <li>
+            <a class="navegacion__enlace" [routerLink]="enlace.ruta" [queryParams]="enlace.parametros"
+               routerLinkActive="activo" [routerLinkActiveOptions]="opcionesActivo" ariaCurrentWhenActive="page" (click)="cerrarMenu()">
+              {{ enlace.texto }}
+              @if (enlace.insignia) {
+                <span class="navegacion__insignia" [class.acento]="enlace.tono === 'acento'">{{ enlace.insignia }}</span>
+              }
+            </a>
+          </li>
+        }
+      </ul>
+      <ul class="navegacion__cuenta">
+        <li><a routerLink="/cuenta/iniciar-sesion" (click)="cerrarMenu()"><app-icono nombre="usuario" [tamano]="18" /> Iniciar sesión</a></li>
+        <li><a routerLink="/cuenta/pedidos" (click)="cerrarMenu()"><app-icono nombre="recibo" [tamano]="18" /> Mis pedidos</a></li>
+        <li><a routerLink="/cuenta/favoritos" (click)="cerrarMenu()"><app-icono nombre="corazon" [tamano]="18" /> Favoritos</a></li>
+      </ul>
+    </nav>
+    @if (menuAbierto()) {
+      <div class="velo" (click)="cerrarMenu()" aria-hidden="true"></div>
+    }
+
+    <div class="acciones">
+      <form class="buscador" role="search" action="#/catalogo">
+        <label for="busqueda" class="sr-only">Buscar productos</label>
+        <input id="busqueda" type="search" name="q" placeholder="Buscar…">
+        <button type="submit" aria-label="Buscar"><app-icono nombre="buscar" [tamano]="20" /></button>
+      </form>
+      <a routerLink="/cuenta/iniciar-sesion" class="accion" aria-label="Mi cuenta"><app-icono nombre="usuario" /></a>
+      <a routerLink="/cuenta/favoritos" class="accion oculto-movil" aria-label="Favoritos"><app-icono nombre="corazon" /></a>
+      <a routerLink="/carrito" class="accion carrito" aria-label="Carrito, 4 productos">
+        <app-icono nombre="carrito" />
+        <span class="contador" aria-hidden="true">4</span>
+      </a>
+    </div>
+  </div>
+</header>

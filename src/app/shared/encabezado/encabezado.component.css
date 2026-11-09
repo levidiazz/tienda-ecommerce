@@ -1,0 +1,71 @@
+.barra-superior { background: var(--fondo-oscuro); color: var(--texto-inv); font-size: 12px; letter-spacing: .02em; }
+.barra-superior__fila { height: 38px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.contacto { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; }
+.circulo { width: 22px; height: 22px; border: 1px solid rgba(255, 255, 255, .6); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+.idioma { display: flex; gap: 12px; }
+.idioma select { background: transparent; color: var(--texto-inv); border: 0; font-size: 12px; cursor: pointer; }
+.idioma option { color: var(--texto); }
+
+.barra-principal { position: sticky; top: 0; z-index: 50; background: var(--fondo); border-bottom: 1px solid var(--borde); }
+.barra-principal__fila { height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+
+.logo {
+  width: 150px; height: 40px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+  border: 1px dashed var(--texto-sec); color: var(--texto-sec);
+  font-family: var(--f-titulo); font-size: 12px; font-weight: 500; letter-spacing: .3em;
+}
+
+.navegacion ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 6px; }
+.navegacion__cabecera, .navegacion__cuenta { display: none !important; }
+.navegacion__enlace {
+  position: relative; display: block; padding: 10px 12px;
+  font-family: var(--f-titulo); font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+  border-bottom: 2px solid transparent; transition: background .15s;
+}
+.navegacion__enlace:hover { background: var(--fondo-sutil); }
+.navegacion__enlace.activo { background: var(--fondo-sutil); border-bottom-color: var(--primario); font-weight: 700; }
+.navegacion__insignia {
+  position: absolute; top: -6px; right: -4px; padding: 1px 4px;
+  font-size: 8px; font-weight: 700; letter-spacing: .06em; color: var(--texto-inv); background: var(--info);
+}
+.navegacion__insignia.acento { background: var(--acento); }
+
+.acciones { display: flex; align-items: center; gap: 14px; }
+.buscador { display: flex; align-items: center; border-bottom: 1px solid var(--borde); width: 190px; }
+.buscador input { flex: 1; min-width: 0; border: 0; outline: none; padding: 6px 0; font-size: 13px; background: transparent; }
+.buscador button, .accion { display: inline-flex; align-items: center; justify-content: center; }
+.carrito { position: relative; }
+.contador {
+  position: absolute; top: -8px; right: -10px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px;
+  background: var(--primario); color: var(--texto-inv); font-size: 10px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+.hamburguesa, .velo { display: none; }
+
+@media (max-width: 1180px) {
+  .hamburguesa { display: inline-flex; }
+  .barra-superior .contacto, .barra-superior .idioma { display: none; }
+  .barra-superior__fila { justify-content: center; }
+  .barra-principal__fila { height: 60px; gap: 12px; }
+  .logo { width: 100px; height: 32px; font-size: 10px; }
+  .navegacion {
+    position: fixed; inset: 0 auto 0 0; width: 300px; z-index: 70; background: var(--fondo); overflow-y: auto;
+    transform: translateX(-100%); transition: transform .25s;
+  }
+  .navegacion.abierta { transform: translateX(0); }
+  .navegacion ul { flex-direction: column; align-items: stretch; gap: 0; }
+  .navegacion__cabecera { display: flex !important; align-items: center; justify-content: space-between; padding: 18px 20px; }
+  .navegacion__enlace { padding: 16px 20px; border-bottom: 0; border-top: 1px solid var(--borde); border-left: 3px solid transparent; }
+  .navegacion__enlace.activo { border-left-color: var(--primario); }
+  .navegacion__insignia { position: static; margin-left: 8px; }
+  .navegacion__cuenta { display: flex !important; background: var(--fondo-sutil); padding: 12px 20px !important; }
+  .navegacion__cuenta a { display: flex; align-items: center; gap: 12px; padding: 10px 0; font-weight: 700; }
+  .velo { display: block; position: fixed; inset: 0; z-index: 60; background: rgba(20, 20, 20, .5); }
+  .buscador { width: 130px; }
+  .oculto-movil { display: none; }
+}
+
+@media (max-width: 560px) {
+  .buscador { display: none; }
+}

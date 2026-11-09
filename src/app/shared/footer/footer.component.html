@@ -1,0 +1,40 @@
+<footer class="pie">
+  <div class="contenedor rejilla">
+    <section class="marca" aria-label="Acerca de la tienda">
+      <a routerLink="/" class="logo">LOGO</a>
+      <p>Electrónica, ropa, calzado, hogar y productos regionales con envío a todo México.</p>
+    </section>
+    <nav aria-labelledby="pie-ayuda">
+      <h2 id="pie-ayuda">Ayuda</h2>
+      <ul>
+        <li><a routerLink="/ayuda">Preguntas frecuentes</a></li>
+        <li><a routerLink="/ayuda">Envíos y entregas</a></li>
+        <li><a routerLink="/ayuda">Cambios y devoluciones</a></li>
+      </ul>
+    </nav>
+    <nav aria-labelledby="pie-legal">
+      <h2 id="pie-legal">Legal</h2>
+      <ul>
+        <li><a routerLink="/ayuda">Aviso de privacidad</a></li>
+        <li><a routerLink="/ayuda">Términos y condiciones</a></li>
+        <li><a routerLink="/ayuda">Cookies</a></li>
+      </ul>
+    </nav>
+    <address aria-labelledby="pie-contacto">
+      <h2 id="pie-contacto">Contacto</h2>
+      <ul>
+        <li><a href="tel:+529511000000">951 100 0000</a></li>
+        <li><a href="mailto:contacto&#64;tutienda.mx">contacto&#64;tutienda.mx</a></li>
+        <li>Oaxaca, México</li>
+      </ul>
+    </address>
+    <section aria-labelledby="pie-pagos">
+      <h2 id="pie-pagos">Pagos seguros</h2>
+      <p class="pagos">
+        <app-icono nombre="tarjeta" [tamano]="26" /><span class="sr-only">Tarjeta de crédito o débito</span>
+        <app-icono nombre="cartera" [tamano]="26" /><span class="sr-only">PayPal</span>
+      </p>
+    </section>
+  </div>
+  <p class="contenedor derechos">© {{ anio }} · Proyecto de Programación Web · ITO</p>
+</footer>
