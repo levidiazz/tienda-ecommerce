@@ -1,0 +1,13 @@
+.bloque { display: flex; flex-direction: column; gap: 18px; margin-bottom: 48px; }
+.rejilla-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.centro { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; min-height: 220px; text-align: center; }
+.tarjeta[aria-busy] { display: flex; flex-direction: column; gap: 12px; }
+.esqueleto.imagen { height: 120px; }
+.esqueleto.linea { height: 14px; }
+.esqueleto.corta { width: 60%; }
+.mensajes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ejemplo-error { max-width: 460px; }
+.campo--error input { border-color: var(--error); }
+.ayuda.error { color: var(--error); }
+.botones { display: flex; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 900px) { .rejilla-3, .mensajes { grid-template-columns: 1fr; } }

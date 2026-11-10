@@ -1,0 +1,86 @@
+<div class="contenedor pagina">
+  <header class="cabecera-pagina">
+    <div>
+      <h1 class="titulo-1">Estados de la interfaz</h1>
+      <p class="texto-sec">Carga, vacíos, mensajes y confirmaciones que usan todas las pantallas.</p>
+    </div>
+  </header>
+
+  <section class="bloque" aria-labelledby="titulo-carga">
+    <h2 id="titulo-carga" class="titulo-2">Cargando</h2>
+    <div class="rejilla-3">
+      <div class="tarjeta centro" aria-busy="true">
+        <span class="spinner" role="status" aria-label="Cargando"></span>
+        <p class="texto-sec pequeno">Cargando productos…</p>
+      </div>
+      <div class="tarjeta" aria-busy="true">
+        <span class="esqueleto imagen"></span>
+        <span class="esqueleto linea"></span>
+        <span class="esqueleto linea corta"></span>
+      </div>
+      <div class="tarjeta centro">
+        <button type="button" class="btn btn-primario" disabled><span class="spinner spinner--chico spinner--claro" aria-hidden="true"></span> Procesando…</button>
+        <p class="texto-sec pequeno">Botón mientras se envía un formulario</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque" aria-labelledby="titulo-vacios">
+    <h2 id="titulo-vacios" class="titulo-2">Sin contenido</h2>
+    <div class="rejilla-3">
+      <app-estado-vacio icono="carrito" titulo="Tu carrito está vacío" texto="Agrega productos y aparecerán aquí.">
+        <a routerLink="/catalogo" class="btn btn-primario">Ir a la tienda</a>
+      </app-estado-vacio>
+      <app-estado-vacio icono="buscar" titulo="Sin resultados" texto="No encontramos productos para “sudadera roja”. Prueba con otras palabras.">
+        <a routerLink="/catalogo" class="btn btn-secundario">Limpiar búsqueda</a>
+      </app-estado-vacio>
+      <app-estado-vacio icono="corazon" titulo="Aún no tienes favoritos" texto="Toca el corazón en un producto para guardarlo.">
+        <a routerLink="/ofertas" class="btn btn-secundario">Ver ofertas</a>
+      </app-estado-vacio>
+    </div>
+  </section>
+
+  <section class="bloque" aria-labelledby="titulo-mensajes">
+    <h2 id="titulo-mensajes" class="titulo-2">Mensajes</h2>
+    <div class="mensajes">
+      <p class="aviso aviso-exito"><app-icono nombre="check-circulo" [tamano]="18" /> Producto agregado al carrito.</p>
+      <p class="aviso aviso-info"><app-icono nombre="info" [tamano]="18" /> Envío gratis en compras mayores a $999.00.</p>
+      <p class="aviso aviso-suave"><app-icono nombre="alerta" [tamano]="18" /> Solo quedan 2 piezas de esta talla.</p>
+      <p class="aviso aviso-error" role="alert"><app-icono nombre="x-circulo" [tamano]="18" /> No pudimos conectar con el servidor. Intenta de nuevo.</p>
+    </div>
+    <form class="tarjeta formulario ejemplo-error" (submit)="$event.preventDefault()">
+      <div class="campo campo--error">
+        <label for="estado-correo">Correo electrónico *</label>
+        <input id="estado-correo" type="email" value="carlos@" aria-invalid="true" aria-describedby="estado-correo-error">
+        <span id="estado-correo-error" class="ayuda error">Escribe un correo válido, por ejemplo nombre&#64;correo.com</span>
+      </div>
+    </form>
+  </section>
+
+  <section class="bloque" aria-labelledby="titulo-dialogos">
+    <h2 id="titulo-dialogos" class="titulo-2">Confirmaciones</h2>
+    <div class="botones">
+      <button type="button" class="btn btn-secundario" (click)="dialogo.set('sesion')">Sesión expirada</button>
+      <button type="button" class="btn btn-secundario" (click)="dialogo.set('eliminar')">Confirmar eliminación</button>
+      <a routerLink="/no-existe" class="btn btn-secundario">Página 404</a>
+      <a routerLink="/catalogo/cargando" class="btn btn-secundario">Catálogo cargando</a>
+    </div>
+  </section>
+</div>
+
+@if (dialogo() === 'sesion') {
+  <app-modal titulo="Tu sesión expiró" subtitulo="Por seguridad cerramos tu sesión" [ancho]="440" (cerrar)="dialogo.set(null)">
+    <p class="texto-sec">Vuelve a iniciar sesión para continuar. Tu carrito se conserva.</p>
+    <div class="modal__acciones">
+      <a routerLink="/cuenta/iniciar-sesion" class="btn btn-primario">Iniciar sesión</a>
+    </div>
+  </app-modal>
+}
+@if (dialogo() === 'eliminar') {
+  <app-modal titulo="¿Eliminar este elemento?" subtitulo="Esta acción no se puede deshacer" [ancho]="440" (cerrar)="dialogo.set(null)">
+    <div class="modal__acciones">
+      <button type="button" class="btn btn-secundario" (click)="dialogo.set(null)">Cancelar</button>
+      <button type="button" class="btn btn-peligro" (click)="dialogo.set(null)">Eliminar</button>
+    </div>
+  </app-modal>
+}
