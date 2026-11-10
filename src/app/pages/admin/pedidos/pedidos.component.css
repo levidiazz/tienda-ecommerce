@@ -1,0 +1,8 @@
+.pestanas button { cursor: pointer; }
+.articulos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
+.articulos li { display: flex; gap: 12px; align-items: center; }
+.articulos li > span { flex: 1; }
+.articulos img { width: 48px; height: 48px; object-fit: cover; }
+h3 { font-family: var(--f-texto); font-weight: 700; margin-bottom: 6px; }
+address { font-style: normal; font-size: 14px; line-height: 1.6; }
+section p { font-size: 14px; }

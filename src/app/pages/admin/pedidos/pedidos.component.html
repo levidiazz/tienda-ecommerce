@@ -1,0 +1,104 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Pedidos</h1>
+    <p class="texto-sec">{{ pedidos.length }} pedidos este mes</p>
+  </div>
+  <button type="button" class="btn btn-secundario"><app-icono nombre="descargar" [tamano]="16" /> Exportar</button>
+</header>
+
+<div class="pestanas" role="group" aria-label="Filtrar por estado">
+  @for (f of filtros; track f; let primero = $first) {
+    <button type="button" [class.activa]="primero" [attr.aria-pressed]="primero">{{ f }}</button>
+  }
+</div>
+
+<form class="barra-herramientas" role="search" (submit)="$event.preventDefault()">
+  <label class="buscador-panel">
+    <app-icono nombre="buscar" [tamano]="16" />
+    <span class="sr-only">Buscar pedido</span>
+    <input type="search" name="q" placeholder="Número de pedido o cliente">
+  </label>
+  <label class="sr-only" for="pedidos-desde">Desde</label>
+  <input id="pedidos-desde" class="selector" type="date" name="desde">
+  <label class="sr-only" for="pedidos-hasta">Hasta</label>
+  <input id="pedidos-hasta" class="selector" type="date" name="hasta">
+</form>
+
+<div class="tabla-envoltura">
+  <table class="tabla">
+    <caption class="sr-only">Listado de pedidos</caption>
+    <thead>
+      <tr>
+        <th scope="col">Pedido</th>
+        <th scope="col">Cliente</th>
+        <th scope="col">Fecha</th>
+        <th scope="col" class="num">Productos</th>
+        <th scope="col">Pago</th>
+        <th scope="col">Estado</th>
+        <th scope="col" class="num">Total</th>
+        <th scope="col"><span class="sr-only">Acciones</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of pedidos; track p.numero) {
+        <tr>
+          <td><strong>#{{ p.numero }}</strong></td>
+          <td><div class="celda-usuario"><div><strong>{{ p.cliente }}</strong><span class="pequeno texto-sec">{{ p.correo }}</span></div></div></td>
+          <td>{{ p.fecha }}</td>
+          <td class="num">{{ p.productos }}</td>
+          <td>{{ p.metodo }}</td>
+          <td><span class="insignia" [class]="'estado--' + p.estado">{{ p.estadoTexto }}</span></td>
+          <td class="num"><strong>{{ p.total | currency: 'MXN' : 'symbol-narrow' }}</strong></td>
+          <td><button type="button" class="btn-icono" [attr.aria-label]="'Ver pedido ' + p.numero" (click)="detalle.set(p)"><app-icono nombre="ojo" [tamano]="16" /></button></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (detalle(); as p) {
+  <app-modal [titulo]="'Pedido #' + p.numero" [subtitulo]="p.cliente + ' · ' + p.fecha" [ancho]="720" (cerrar)="detalle.set(null)">
+    <ul class="articulos">
+      @for (item of productos; track item.nombre) {
+        <li>
+          <img [src]="item.imagen" [alt]="item.nombre" width="48" height="48">
+          <span><strong>{{ item.nombre }}</strong><br><span class="pequeno texto-sec">{{ item.cantidad }} × {{ item.precio | currency: 'MXN' : 'symbol-narrow' }}</span></span>
+          <strong>{{ item.cantidad * item.precio | currency: 'MXN' : 'symbol-narrow' }}</strong>
+        </li>
+      }
+    </ul>
+    <div class="fila-2">
+      <section>
+        <h3 class="pequeno texto-sec">Enviar a</h3>
+        <address>{{ direccion.receptor }}<br>{{ direccion.calle }}<br>{{ direccion.ciudad }}</address>
+      </section>
+      <section>
+        <h3 class="pequeno texto-sec">Pago</h3>
+        <p>{{ p.metodo }}</p>
+        <p><strong>Total {{ p.total | currency: 'MXN' : 'symbol-narrow' }}</strong></p>
+      </section>
+    </div>
+    <form class="formulario" (submit)="$event.preventDefault(); detalle.set(null)">
+      <div class="fila-2">
+        <div class="campo">
+          <label for="pedido-estado">Estado del pedido</label>
+          <select id="pedido-estado" name="estado">
+            <option [selected]="p.estado === 'pendiente'">Pendiente</option>
+            <option [selected]="p.estado === 'pagado'">Pagado</option>
+            <option [selected]="p.estado === 'enviado'">Enviado</option>
+            <option [selected]="p.estado === 'entregado'">Entregado</option>
+            <option [selected]="p.estado === 'cancelado'">Cancelado</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="pedido-guia">Número de guía</label>
+          <input id="pedido-guia" name="guia" maxlength="40" placeholder="Estafeta 7701…">
+        </div>
+      </div>
+      <div class="modal__acciones">
+        <button type="button" class="btn btn-secundario"><app-icono nombre="imprimir" [tamano]="16" /> Imprimir</button>
+        <button type="submit" class="btn btn-primario">Guardar cambios</button>
+      </div>
+    </form>
+  </app-modal>
+}
