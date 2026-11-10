@@ -14,7 +14,7 @@ import { ResumenPedidoComponent } from '../../../shared/resumen-pedido/resumen-p
   templateUrl: './checkout-direccion.html',
   styleUrl: './checkout-direccion.css'
 })
-export class CheckoutDireccion {
+export default class CheckoutDireccion {
   direcciones = DIRECCIONES;
   formularioAbierto = signal(false);
 }

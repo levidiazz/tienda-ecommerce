@@ -7,4 +7,4 @@ import {  Component } from '@angular/core';
   styleUrl: './datos.css',
 
 })
-export class Datos {}
+export default class Datos {}

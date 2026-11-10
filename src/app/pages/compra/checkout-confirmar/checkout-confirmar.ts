@@ -12,7 +12,7 @@ import { PasosCheckout } from '../../../shared/pasos-checkout/pasos-checkout';
   templateUrl: './checkout-confirmar.html',
   styleUrl: './checkout-confirmar.css'
 })
-export class CheckoutConfirmar {
+export default class CheckoutConfirmar {
   readonly productos = PEDIDO;
   readonly resumen = RESUMEN;
   readonly direccion = DIRECCIONES[0];

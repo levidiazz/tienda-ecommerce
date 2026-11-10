@@ -11,6 +11,6 @@ import { IconoComponent } from '../../../shared/icono/icono.component';
   styleUrl: '../pago-resultado.css'
 
 })
-export class PagoAprobado {
+export default class PagoAprobado {
   readonly resumen = RESUMEN;
 }

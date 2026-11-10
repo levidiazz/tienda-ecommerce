@@ -10,7 +10,7 @@ import { IconoComponent } from '../../../shared/icono/icono.component';
   templateUrl: './pedido-detalle.html',
   styleUrl: './pedido-detalle.css'
 })
-export class PedidoDetalleComponent {
+export default class PedidoDetalleComponent {
   numero = input<string>('000006');
   readonly productos = PEDIDO;
   readonly resumen = RESUMEN;

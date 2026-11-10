@@ -12,4 +12,4 @@ import { ResumenPedidoComponent } from '../../../shared/resumen-pedido/resumen-p
   templateUrl: './checkout-pago.html',
   styleUrl: './checkout-pago.css'
 })
-export class CheckoutPago {}
+export default class CheckoutPago {}

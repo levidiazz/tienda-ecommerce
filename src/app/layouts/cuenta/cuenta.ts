@@ -8,7 +8,7 @@ import { IconoComponent } from '../../shared/icono/icono.component';
   templateUrl: './cuenta.html',
   styleUrl: './cuenta.css',
 })
-export class Cuenta {
+export default class Cuenta {
   readonly enlaces = [
     { texto: 'Mis pedidos', ruta: '/cuenta/pedidos', icono: 'recibo' },
     { texto: 'Mis direcciones', ruta: '/cuenta/direcciones', icono: 'ubicacion' },

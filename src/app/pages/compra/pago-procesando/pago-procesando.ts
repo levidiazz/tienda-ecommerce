@@ -8,4 +8,4 @@ import { IconoComponent } from '../../../shared/icono/icono.component';
   templateUrl: './pago-procesando.html',
   styleUrl: '../pago-resultado.css'
 })
-export class PagoProcesando {}
+export default class PagoProcesando {}

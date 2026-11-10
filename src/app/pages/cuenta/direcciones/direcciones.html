@@ -1,0 +1,48 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Mis direcciones</h1>
+    <p class="texto-sec">Elige a dónde llegan tus pedidos.</p>
+  </div>
+  <button type="button" class="btn btn-primario" (click)="formularioAbierto.set(true)"><app-icono nombre="mas" [tamano]="16" /> Agregar dirección</button>
+</header>
+
+<ul class="direcciones">
+  @for (d of direcciones; track d.alias) {
+    <li>
+      <article class="tarjeta direccion" [class.principal]="d.principal">
+        <header>
+          <h2 class="titulo-3"><app-icono [nombre]="d.alias === 'Casa' ? 'casa' : 'ubicacion'" [tamano]="18" /> {{ d.alias }}</h2>
+          @if (d.principal) { <span class="insignia insignia-suave">Principal</span> }
+        </header>
+        <address>
+          <strong>{{ d.receptor }}</strong><br>
+          {{ d.calle }}<br>
+          {{ d.ciudad }}<br>
+          Tel. {{ d.telefono }}
+        </address>
+        <p class="pequeno texto-sec">{{ d.referencias }}</p>
+        <footer>
+          <button type="button" class="btn btn-secundario" (click)="formularioAbierto.set(true)"><app-icono nombre="editar" [tamano]="16" /> Editar</button>
+          <button type="button" class="btn btn-fantasma" (click)="eliminarAbierto.set(d.alias)">Eliminar</button>
+          @if (!d.principal) { <button type="button" class="btn btn-fantasma">Hacer principal</button> }
+        </footer>
+      </article>
+    </li>
+  }
+</ul>
+
+@if (formularioAbierto()) {
+  <app-modal titulo="Dirección de envío" subtitulo="Todos los campos con * son obligatorios" (cerrar)="formularioAbierto.set(false)">
+    <formulario-direccion (guardar)="formularioAbierto.set(false)" (cancelar)="formularioAbierto.set(false)" />
+  </app-modal>
+}
+
+@if (eliminarAbierto(); as alias) {
+  <app-modal titulo="¿Eliminar dirección?" [subtitulo]="alias" [ancho]="440" (cerrar)="eliminarAbierto.set(null)">
+    <p class="texto-sec">Ya no aparecerá al pagar. Los pedidos anteriores conservan la dirección con la que se enviaron.</p>
+    <div class="modal__acciones">
+      <button type="button" class="btn btn-secundario" (click)="eliminarAbierto.set(null)">Cancelar</button>
+      <button type="button" class="btn btn-peligro" (click)="eliminarAbierto.set(null)">Eliminar</button>
+    </div>
+  </app-modal>
+}

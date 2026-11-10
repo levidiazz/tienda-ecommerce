@@ -10,7 +10,7 @@ import { EstrellasComponent } from '../../../shared/estrellas/estrellas.componen
   templateUrl: './resenas.html',
   styleUrl: './resenas.css'
 })
-export class MisResenasComponent {
+export default class MisResenasComponent {
   pestana = signal<'pendientes' | 'publicadas'>('pendientes');
   readonly pendientes = [
     { nombre: 'Laptop 14" Ryzen 5', imagen: 'img/laptop.jpg', slug: 'laptop-ryzen-5', entrega: 'Entregado el 1 oct 2026' },
