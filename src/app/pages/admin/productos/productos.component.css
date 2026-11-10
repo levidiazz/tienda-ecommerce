@@ -1,0 +1,2 @@
+.interruptores { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px; font-size: 14px; }
+@media (max-width: 600px) { .interruptores { grid-template-columns: 1fr; } }
