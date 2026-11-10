@@ -1,0 +1,93 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Usuarios</h1>
+    <p class="texto-sec">Clientes y administradores</p>
+  </div>
+  <button type="button" class="btn btn-primario" (click)="formularioAbierto.set(true)"><app-icono nombre="mas" [tamano]="16" /> Nuevo usuario</button>
+</header>
+
+<form class="barra-herramientas" role="search" (submit)="$event.preventDefault()">
+  <label class="buscador-panel">
+    <app-icono nombre="buscar" [tamano]="16" />
+    <span class="sr-only">Buscar usuario</span>
+    <input type="search" name="q" placeholder="Nombre o correo">
+  </label>
+  <label class="sr-only" for="usuarios-rol">Rol</label>
+  <select id="usuarios-rol" class="selector" name="rol"><option value="">Todos los roles</option><option>Cliente</option><option>Administrador</option></select>
+</form>
+
+<div class="tabla-envoltura">
+  <table class="tabla">
+    <caption class="sr-only">Listado de usuarios</caption>
+    <thead>
+      <tr>
+        <th scope="col">Usuario</th>
+        <th scope="col">Rol</th>
+        <th scope="col">Alta</th>
+        <th scope="col" class="num">Pedidos</th>
+        <th scope="col">Estado</th>
+        <th scope="col"><span class="sr-only">Acciones</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (u of usuarios; track u.correo) {
+        <tr>
+          <td>
+            <div class="celda-usuario">
+              <span class="avatar" aria-hidden="true">{{ u.iniciales }}</span>
+              <div><strong>{{ u.nombre }}</strong><span class="pequeno texto-sec">{{ u.correo }}</span></div>
+            </div>
+          </td>
+          <td><span class="insignia" [class.insignia-oscura]="u.rol === 'Administrador'" [class.insignia-suave]="u.rol !== 'Administrador'">{{ u.rol }}</span></td>
+          <td>{{ u.alta }}</td>
+          <td class="num">{{ u.pedidos }}</td>
+          <td>
+            @if (u.activo) { <span class="insignia estado--entregado">Activo</span> } @else { <span class="insignia estado--cancelado">Bloqueado</span> }
+          </td>
+          <td>
+            <div class="acciones-tabla">
+              <button type="button" class="btn-icono" [attr.aria-label]="'Editar ' + u.nombre" (click)="formularioAbierto.set(true)"><app-icono nombre="editar" [tamano]="16" /></button>
+              <button type="button" class="btn-icono" [attr.aria-label]="(u.activo ? 'Bloquear ' : 'Activar ') + u.nombre"><app-icono [nombre]="u.activo ? 'candado' : 'check'" [tamano]="16" /></button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (formularioAbierto()) {
+  <app-modal titulo="Usuario" subtitulo="Los campos con * son obligatorios" (cerrar)="formularioAbierto.set(false)">
+    <form class="formulario" (submit)="$event.preventDefault(); formularioAbierto.set(false)">
+      <div class="fila-2">
+        <div class="campo">
+          <label for="usr-nombre">Nombre(s) *</label>
+          <input id="usr-nombre" name="nombre" maxlength="80" required>
+        </div>
+        <div class="campo">
+          <label for="usr-apellidos">Apellidos *</label>
+          <input id="usr-apellidos" name="apellidos" maxlength="160" required>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="usr-correo">Correo *</label>
+        <input id="usr-correo" name="correo" type="email" maxlength="150" required>
+      </div>
+      <div class="fila-2">
+        <div class="campo">
+          <label for="usr-rol">Rol *</label>
+          <select id="usr-rol" name="rol" required><option>Cliente</option><option>Administrador</option></select>
+        </div>
+        <div class="campo">
+          <label for="usr-clave">Contraseña temporal *</label>
+          <input id="usr-clave" name="contrasena" type="password" autocomplete="new-password" minlength="8" required>
+        </div>
+      </div>
+      <label class="interruptor"><span>Cuenta activa</span><input type="checkbox" name="activo" checked><span class="interruptor__pista" aria-hidden="true"></span></label>
+      <div class="modal__acciones">
+        <button type="button" class="btn btn-secundario" (click)="formularioAbierto.set(false)">Cancelar</button>
+        <button type="submit" class="btn btn-primario">Guardar</button>
+      </div>
+    </form>
+  </app-modal>
+}
