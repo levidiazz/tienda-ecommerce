@@ -1,0 +1,6 @@
+.aviso-temporada { background: var(--fondo-oscuro); color: var(--texto-inv); padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+.etiqueta-blanca { font-family: var(--f-titulo); font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; margin-right: 12px; }
+.aviso-temporada strong { font-family: var(--f-titulo); color: var(--acento); font-size: 18px; letter-spacing: .04em; text-transform: uppercase; }
+.ordenar { display: flex; align-items: center; gap: 8px; border: 1px solid var(--borde); padding: 0 12px; height: 42px; font-size: 13px; }
+.ordenar select { border: 0; outline: none; font-weight: 700; background: transparent; }
+.categorias { margin-bottom: 28px; }
