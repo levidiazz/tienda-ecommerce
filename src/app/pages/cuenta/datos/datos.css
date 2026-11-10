@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cabecera-pagina {
+  margin-bottom: 4px;
+}
+h2 {
+  margin-bottom: 16px;
+}
+.botones {
+  display: flex;
+  justify-content: flex-end;
+}

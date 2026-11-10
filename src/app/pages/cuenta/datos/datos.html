@@ -1,0 +1,79 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Mis datos</h1>
+    <p class="texto-sec">Actualiza tu información personal y tu contraseña.</p>
+  </div>
+</header>
+
+<section class="tarjeta" aria-labelledby="titulo-personales">
+  <h2 id="titulo-personales" class="titulo-3">Información personal</h2>
+  <form class="formulario" (submit)="$event.preventDefault()">
+    <div class="fila-3">
+      <div class="campo">
+        <label for="datos-nombre">Nombre(s) *</label>
+        <input id="datos-nombre" name="nombre" autocomplete="given-name" value="Carlos" required>
+      </div>
+      <div class="campo">
+        <label for="datos-paterno">Apellido paterno *</label>
+        <input id="datos-paterno" name="apellidoPaterno" autocomplete="family-name" value="Ramírez" required>
+      </div>
+      <div class="campo">
+        <label for="datos-materno">Apellido materno</label>
+        <input id="datos-materno" name="apellidoMaterno" value="López">
+      </div>
+    </div>
+    <div class="fila-3">
+      <div class="campo">
+        <label for="datos-correo">Correo electrónico *</label>
+        <input id="datos-correo" name="correo" type="email" autocomplete="email" value="carlos@correo.com" required>
+      </div>
+      <div class="campo">
+        <label for="datos-telefono">Teléfono</label>
+        <input id="datos-telefono" name="telefono" type="tel" inputmode="tel" pattern="[0-9 ]{10,14}" value="951 123 4567">
+      </div>
+      <div class="campo">
+        <label for="datos-nacimiento">Fecha de nacimiento *</label>
+        <input id="datos-nacimiento" name="fechaNacimiento" type="date" value="1998-05-14" required>
+      </div>
+    </div>
+    <div class="botones"><button type="submit" class="btn btn-primario">Guardar cambios</button></div>
+  </form>
+</section>
+
+<section class="tarjeta" aria-labelledby="titulo-clave">
+  <h2 id="titulo-clave" class="titulo-3">Cambiar contraseña</h2>
+  <form class="formulario" (submit)="$event.preventDefault()">
+    <input type="email" name="usuario" autocomplete="username" value="carlos@correo.com" hidden>
+    <div class="fila-3">
+      <div class="campo">
+        <label for="clave-actual">Contraseña actual *</label>
+        <input id="clave-actual" name="actual" type="password" autocomplete="current-password" required>
+      </div>
+      <div class="campo">
+        <label for="clave-nueva">Nueva contraseña *</label>
+        <input id="clave-nueva" name="nueva" type="password" autocomplete="new-password" minlength="8" required>
+      </div>
+      <div class="campo">
+        <label for="clave-confirmar">Confirmar contraseña *</label>
+        <input id="clave-confirmar" name="confirmar" type="password" autocomplete="new-password" minlength="8" required>
+      </div>
+    </div>
+    <div class="botones"><button type="submit" class="btn btn-primario">Actualizar contraseña</button></div>
+  </form>
+</section>
+
+<section class="tarjeta" aria-labelledby="titulo-preferencias">
+  <h2 id="titulo-preferencias" class="titulo-3">Preferencias de comunicación</h2>
+  <form class="formulario" (submit)="$event.preventDefault()">
+    <label class="interruptor">
+      <span>Recibir ofertas y novedades por correo</span>
+      <input type="checkbox" name="ofertas" checked>
+      <span class="interruptor__pista" aria-hidden="true"></span>
+    </label>
+    <label class="interruptor">
+      <span>Avisos del estado de mis pedidos</span>
+      <input type="checkbox" name="avisosPedidos" checked>
+      <span class="interruptor__pista" aria-hidden="true"></span>
+    </label>
+  </form>
+</section>
