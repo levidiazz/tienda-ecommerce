@@ -1,0 +1,88 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Proveedores</h1>
+    <p class="texto-sec">{{ proveedores.length }} proveedores registrados</p>
+  </div>
+  <button type="button" class="btn btn-primario" (click)="formularioAbierto.set(true)"><app-icono nombre="mas" [tamano]="16" /> Nuevo proveedor</button>
+</header>
+
+<form class="barra-herramientas" role="search" (submit)="$event.preventDefault()">
+  <label class="buscador-panel">
+    <app-icono nombre="buscar" [tamano]="16" />
+    <span class="sr-only">Buscar proveedor</span>
+    <input type="search" name="q" placeholder="Buscar por nombre o contacto">
+  </label>
+</form>
+
+<div class="tabla-envoltura">
+  <table class="tabla">
+    <caption class="sr-only">Listado de proveedores</caption>
+    <thead>
+      <tr>
+        <th scope="col">Proveedor</th>
+        <th scope="col">Contacto</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col" class="num">Productos</th>
+        <th scope="col">Estado</th>
+        <th scope="col"><span class="sr-only">Acciones</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of proveedores; track p.nombre) {
+        <tr>
+          <td><strong>{{ p.nombre }}</strong></td>
+          <td>{{ p.contacto }}</td>
+          <td><a [href]="'mailto:' + p.correo">{{ p.correo }}</a></td>
+          <td><a [href]="'tel:' + p.telefono">{{ p.telefono }}</a></td>
+          <td class="num">{{ p.productos }}</td>
+          <td>
+            @if (p.activo) { <span class="insignia estado--entregado">Activo</span> } @else { <span class="insignia estado--cancelado">Inactivo</span> }
+          </td>
+          <td>
+            <div class="acciones-tabla">
+              <button type="button" class="btn-icono" [attr.aria-label]="'Editar ' + p.nombre" (click)="formularioAbierto.set(true)"><app-icono nombre="editar" [tamano]="16" /></button>
+              <button type="button" class="btn-icono" [attr.aria-label]="'Eliminar ' + p.nombre"><app-icono nombre="basura" [tamano]="16" /></button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (formularioAbierto()) {
+  <app-modal titulo="Proveedor" subtitulo="Datos de contacto" (cerrar)="formularioAbierto.set(false)">
+    <form class="formulario" (submit)="$event.preventDefault(); formularioAbierto.set(false)">
+      <div class="campo">
+        <label for="prov-nombre">Razón social *</label>
+        <input id="prov-nombre" name="nombre" maxlength="150" required>
+      </div>
+      <div class="fila-2">
+        <div class="campo">
+          <label for="prov-rfc">RFC</label>
+          <input id="prov-rfc" name="rfc" maxlength="13" pattern="[A-ZÑ&]{3,4}[0-9]{6}[A-Z0-9]{3}">
+        </div>
+        <div class="campo">
+          <label for="prov-contacto">Persona de contacto *</label>
+          <input id="prov-contacto" name="contacto" maxlength="120" required>
+        </div>
+      </div>
+      <div class="fila-2">
+        <div class="campo">
+          <label for="prov-correo">Correo *</label>
+          <input id="prov-correo" name="correo" type="email" maxlength="150" required>
+        </div>
+        <div class="campo">
+          <label for="prov-telefono">Teléfono *</label>
+          <input id="prov-telefono" name="telefono" type="tel" inputmode="tel" pattern="[0-9 ]{10,14}" required>
+        </div>
+      </div>
+      <label class="interruptor"><span>Proveedor activo</span><input type="checkbox" name="activo" checked><span class="interruptor__pista" aria-hidden="true"></span></label>
+      <div class="modal__acciones">
+        <button type="button" class="btn btn-secundario" (click)="formularioAbierto.set(false)">Cancelar</button>
+        <button type="submit" class="btn btn-primario">Guardar</button>
+      </div>
+    </form>
+  </app-modal>
+}
