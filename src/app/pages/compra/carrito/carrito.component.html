@@ -1,0 +1,80 @@
+<div class="contenedor pagina">
+  <app-migas [migas]="migas" />
+  <header class="cabecera-pagina">
+    <h1 class="titulo-1">Tu carrito</h1>
+    <p class="texto-sec">4 productos</p>
+  </header>
+
+  <div class="checkout">
+    <section aria-label="Productos en el carrito">
+      <div class="tabla-envoltura">
+        <table class="tabla">
+          <caption class="sr-only">Productos agregados al carrito</caption>
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col" class="num">Precio</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col" class="num">Importe</th>
+              <th scope="col"><span class="sr-only">Acciones</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of productos; track item.nombre; let i = $index) {
+              <tr>
+                <td>
+                  <div class="producto">
+                    <img class="miniatura" [src]="item.imagen" [alt]="item.nombre" width="64" height="64">
+                    <div>
+                      <strong>{{ item.nombre }}</strong>
+                      @if (item.detalle) { <span class="pequeno texto-sec">{{ item.detalle }}</span> }
+                    </div>
+                  </div>
+                </td>
+                <td class="num">{{ item.precio | currency: 'MXN' : 'symbol-narrow' }}</td>
+                <td>
+                  <label class="sr-only" [for]="'cantidad-' + i">Cantidad de {{ item.nombre }}</label>
+                  <input class="cantidad" type="number" [id]="'cantidad-' + i" name="cantidad" min="1" max="10" [value]="item.cantidad">
+                </td>
+                <td class="num"><strong>{{ item.precio * item.cantidad | currency: 'MXN' : 'symbol-narrow' }}</strong></td>
+                <td>
+                  <button type="button" class="btn-icono" [attr.aria-label]="'Quitar ' + item.nombre" (click)="quitarAbierto.set(item.nombre)">
+                    <app-icono nombre="basura" [tamano]="18" />
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="checkout__acciones">
+        <a routerLink="/catalogo" class="btn btn-fantasma"><app-icono nombre="izquierda" [tamano]="16" /> Seguir comprando</a>
+        <button type="button" class="btn btn-secundario"><app-icono nombre="recargar" [tamano]="16" /> Actualizar carrito</button>
+      </div>
+
+      <form class="cupon" (submit)="$event.preventDefault()">
+        <label for="cupon">¿Tienes un código de descuento?</label>
+        <div>
+          <input id="cupon" name="cupon" maxlength="20" placeholder="Código">
+          <button type="submit" class="btn btn-secundario">Aplicar</button>
+        </div>
+      </form>
+    </section>
+
+    <app-resumen-pedido>
+      <a routerLink="/checkout/direccion" class="btn btn-primario btn-bloque">Proceder al pago</a>
+      <p class="pequeno texto-sec seguro"><app-icono nombre="candado" [tamano]="14" /> Pago seguro con tarjeta o PayPal</p>
+    </app-resumen-pedido>
+  </div>
+
+</div>
+
+@if (quitarAbierto(); as nombre) {
+  <app-modal titulo="¿Quitar producto?" [subtitulo]="nombre" [ancho]="440" (cerrar)="quitarAbierto.set(null)">
+    <p class="texto-sec">El producto se quitará de tu carrito. Puedes volver a agregarlo cuando quieras.</p>
+    <div class="modal__acciones">
+      <button type="button" class="btn btn-secundario" (click)="quitarAbierto.set(null)">Cancelar</button>
+      <button type="button" class="btn btn-peligro" (click)="quitarAbierto.set(null)">Quitar</button>
+    </div>
+  </app-modal>
+}
