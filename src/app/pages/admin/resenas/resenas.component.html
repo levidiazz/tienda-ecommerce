@@ -1,0 +1,47 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Reseñas</h1>
+    <p class="texto-sec">Modera las opiniones antes de publicarlas</p>
+  </div>
+</header>
+
+<div class="pestanas" role="group" aria-label="Filtrar reseñas">
+  @for (f of filtros; track f; let primero = $first) {
+    <button type="button" [class.activa]="primero" [attr.aria-pressed]="primero">{{ f }}</button>
+  }
+</div>
+
+<div class="tabla-envoltura">
+  <table class="tabla">
+    <caption class="sr-only">Listado de reseñas</caption>
+    <thead>
+      <tr>
+        <th scope="col">Producto</th>
+        <th scope="col">Cliente</th>
+        <th scope="col">Calificación</th>
+        <th scope="col">Título</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Estado</th>
+        <th scope="col"><span class="sr-only">Acciones</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (r of resenas; track r.titulo) {
+        <tr>
+          <td><strong>{{ r.producto }}</strong></td>
+          <td>{{ r.autor }}</td>
+          <td><app-estrellas [valor]="r.calificacion" [tamano]="14" /></td>
+          <td>{{ r.titulo }}</td>
+          <td>{{ r.fecha }}</td>
+          <td><span class="insignia" [class]="'estado--' + r.clase">{{ r.estado }}</span></td>
+          <td>
+            <div class="acciones-tabla">
+              <button type="button" class="btn-icono" [attr.aria-label]="'Publicar reseña de ' + r.autor"><app-icono nombre="check" [tamano]="16" /></button>
+              <button type="button" class="btn-icono" [attr.aria-label]="'Ocultar reseña de ' + r.autor"><app-icono nombre="x-circulo" [tamano]="16" /></button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

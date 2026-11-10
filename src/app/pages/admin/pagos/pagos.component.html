@@ -1,0 +1,54 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Pagos</h1>
+    <p class="texto-sec">Transacciones con tarjeta y PayPal</p>
+  </div>
+  <button type="button" class="btn btn-secundario"><app-icono nombre="descargar" [tamano]="16" /> Exportar</button>
+</header>
+
+<section class="kpis" aria-label="Resumen de pagos">
+  <article class="kpi"><span class="pequeno texto-sec">Cobrado</span><strong>{{ 17391 | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}</strong><span class="sube">3 aprobados</span></article>
+  <article class="kpi"><span class="pequeno texto-sec">Pendiente</span><strong>{{ 1197 | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}</strong><span class="texto-sec pequeno">1 pago</span></article>
+  <article class="kpi"><span class="pequeno texto-sec">Rechazado</span><strong>{{ 599 | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}</strong><span class="baja">1 pago</span></article>
+  <article class="kpi"><span class="pequeno texto-sec">Tasa de aprobación</span><strong>80%</strong><span class="sube">▲ 5%</span></article>
+</section>
+
+<form class="barra-herramientas filtros" role="search" (submit)="$event.preventDefault()">
+  <label class="buscador-panel">
+    <app-icono nombre="buscar" [tamano]="16" />
+    <span class="sr-only">Buscar pago</span>
+    <input type="search" name="q" placeholder="Referencia o número de pedido">
+  </label>
+  <label class="sr-only" for="pagos-metodo">Método</label>
+  <select id="pagos-metodo" class="selector" name="metodo"><option value="">Todos los métodos</option><option>Tarjeta</option><option>PayPal</option></select>
+  <label class="sr-only" for="pagos-estado">Estado</label>
+  <select id="pagos-estado" class="selector" name="estado"><option value="">Todos los estados</option><option>Aprobado</option><option>Pendiente</option><option>Rechazado</option></select>
+</form>
+
+<div class="tabla-envoltura">
+  <table class="tabla">
+    <caption class="sr-only">Listado de pagos</caption>
+    <thead>
+      <tr>
+        <th scope="col">Referencia</th>
+        <th scope="col">Pedido</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Método</th>
+        <th scope="col">Estado</th>
+        <th scope="col" class="num">Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of pagos; track p.referencia) {
+        <tr>
+          <td><strong>{{ p.referencia }}</strong></td>
+          <td>#{{ p.pedido }}</td>
+          <td>{{ p.fecha }}</td>
+          <td><div class="celda-usuario"><div><strong>{{ p.metodo }}</strong><span class="pequeno texto-sec">{{ p.detalle }}</span></div></div></td>
+          <td><span class="insignia" [class]="'estado--' + p.clase">{{ p.estado }}</span></td>
+          <td class="num"><strong>{{ p.monto | currency: 'MXN' : 'symbol-narrow' }}</strong></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
