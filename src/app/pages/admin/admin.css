@@ -1,0 +1,9 @@
+.paginacion { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--borde); border-top: 0; background: var(--fondo); font-size: 13px; flex-wrap: wrap; }
+.paginacion nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; }
+.paginacion button { min-width: 32px; height: 32px; border: 1px solid var(--borde); font-weight: 700; }
+.paginacion button[aria-current] { background: var(--primario); color: var(--texto-inv); border-color: var(--primario); }
+.celda-producto { display: flex; gap: 12px; align-items: center; }
+.celda-producto div, .celda-usuario div { display: flex; flex-direction: column; }
+.celda-usuario { display: flex; gap: 10px; align-items: center; }
+.celda-usuario .avatar { width: 32px; height: 32px; font-size: 11px; }
+.stock-bajo { color: var(--error); font-weight: 700; }

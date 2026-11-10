@@ -1,0 +1,28 @@
+.admin { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; background: var(--fondo-sutil); }
+.lateral { background: var(--fondo-oscuro); color: var(--texto-inv); display: flex; flex-direction: column; padding: 20px 12px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.lateral__marca { display: flex; align-items: center; gap: 12px; padding: 0 8px 24px; font-family: var(--f-titulo); font-weight: 600; font-size: 16px; }
+.logo { width: 56px; height: 36px; border: 1px dashed rgba(255, 255, 255, .5); display: inline-flex; align-items: center; justify-content: center; font-size: 8px; letter-spacing: .2em; color: rgba(255, 255, 255, .7); }
+ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.lateral a { display: flex; align-items: center; gap: 12px; padding: 10px 14px; font-size: 14px; color: rgba(255, 255, 255, .85); }
+.lateral a:hover { background: rgba(255, 255, 255, .08); }
+.lateral a.activo { background: var(--fondo); color: var(--texto); font-weight: 700; }
+.salir { margin-top: auto; }
+.principal { min-width: 0; display: flex; flex-direction: column; }
+.barra { height: 68px; background: var(--fondo); border-bottom: 1px solid var(--borde); display: flex; align-items: center; justify-content: flex-end; gap: 20px; padding: 0 28px; }
+.buscar { display: flex; align-items: center; gap: 8px; background: var(--fondo-sutil); padding: 0 12px; height: 38px; color: var(--texto-sec); }
+.buscar input { border: 0; background: transparent; outline: none; font-size: 13px; width: 180px; }
+.usuario { display: flex; align-items: center; gap: 10px; }
+.usuario .avatar { width: 36px; height: 36px; background: var(--fondo-sutil); color: var(--texto); }
+.usuario strong, .usuario span { display: block; font-size: 13px; }
+.usuario span { font-family: var(--f-titulo); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--texto-sec); }
+.contenido { padding: 32px 28px 48px; }
+.hamburguesa, .velo { display: none; }
+@media (max-width: 1000px) {
+  .admin { grid-template-columns: minmax(0, 1fr); }
+  .lateral { position: fixed; inset: 0 auto 0 0; width: 260px; z-index: 80; transform: translateX(-100%); transition: transform .25s; }
+  .lateral.abierto { transform: translateX(0); }
+  .velo { display: block; position: fixed; inset: 0; z-index: 70; background: rgba(20, 20, 20, .5); }
+  .hamburguesa { display: inline-flex; margin-right: auto; }
+  .buscar { display: none; }
+  .contenido { padding: 20px 16px 40px; }
+}
