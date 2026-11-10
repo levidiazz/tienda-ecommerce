@@ -1,0 +1,118 @@
+@if (producto(); as p) {
+  <div class="contenedor pagina">
+    <app-migas [migas]="migas()" />
+
+    <header class="encabezado">
+      <img [src]="p.imagenes[0]" [alt]="p.nombre" width="96" height="96">
+      <div>
+        <h1 class="titulo-1">Opiniones de clientes</h1>
+        <p><strong>{{ p.nombre }}</strong> <span class="texto-sec">{{ p.precio | currency: 'MXN' : 'symbol-narrow' }}</span></p>
+      </div>
+      <a class="btn btn-secundario" [routerLink]="['/producto', p.slug]">Ver producto</a>
+    </header>
+
+    <div class="columnas">
+      <aside class="resumen" aria-labelledby="titulo-resumen-resenas">
+        <h2 id="titulo-resumen-resenas" class="sr-only">Resumen de calificaciones</h2>
+        <div class="promedio">
+          <strong>4.8</strong>
+          <div>
+            <app-estrellas [valor]="5" [tamano]="18" />
+            <p class="pequeno texto-sec">12 reseñas verificadas</p>
+          </div>
+        </div>
+        <ul class="barras">
+          @for (d of distribucion; track d.estrellas) {
+            <li>
+              <span>{{ d.estrellas }} ★</span>
+              <meter min="0" max="12" [value]="d.cantidad" [attr.aria-label]="d.estrellas + ' estrellas: ' + d.cantidad + ' reseñas'"></meter>
+              <span class="texto-sec">{{ d.cantidad }}</span>
+            </li>
+          }
+        </ul>
+        <hr class="divisor">
+        <button type="button" class="btn btn-primario btn-bloque" (click)="formularioAbierto.set(true)"><app-icono nombre="editar" [tamano]="16" /> Escribir reseña</button>
+        <p class="pequeno texto-sec">Solo pueden opinar clientes con una compra entregada de este producto.</p>
+      </aside>
+
+      <section class="lista" aria-label="Reseñas">
+        <div class="barra-lista">
+          <fieldset>
+            <legend class="sr-only">Filtrar reseñas</legend>
+            <div class="opciones-chip">
+              <label class="opcion-chip"><input type="radio" name="filtro-resenas" checked><span>Todas (12)</span></label>
+              <label class="opcion-chip"><input type="radio" name="filtro-resenas"><span>Con fotos (3)</span></label>
+              <label class="opcion-chip"><input type="radio" name="filtro-resenas"><span>5 ★ (10)</span></label>
+              <label class="opcion-chip"><input type="radio" name="filtro-resenas"><span>4 ★ (2)</span></label>
+            </div>
+          </fieldset>
+          <label class="sr-only" for="orden-resenas">Ordenar reseñas</label>
+          <select id="orden-resenas" class="selector"><option>Más recientes</option><option>Mejor calificadas</option></select>
+        </div>
+
+        @for (r of resenas; track r.autor; let primera = $first) {
+          <article class="resena">
+            <span class="avatar" aria-hidden="true">{{ r.iniciales }}</span>
+            <div class="resena__cuerpo">
+              <header class="resena__cabecera">
+                <h3>{{ r.autor }}</h3>
+                <span class="verificada"><app-icono nombre="check-circulo" [tamano]="14" /> Compra verificada</span>
+                <time class="pequeno texto-sec">{{ r.fecha }}</time>
+              </header>
+              <app-estrellas [valor]="r.calificacion" />
+              <h4>{{ r.titulo }}</h4>
+              <p class="texto-sec">{{ r.texto }}</p>
+              @if (primera) {
+                <ul class="fotos">
+                  <li><img src="img/playera-bordada.jpg" alt="Foto del cliente" width="72" height="72" loading="lazy"></li>
+                  <li><img src="img/playera-negra.jpg" alt="Foto del cliente" width="72" height="72" loading="lazy"></li>
+                </ul>
+              }
+              <footer class="pequeno texto-sec">
+                {{ r.compra }} · ¿Te fue útil?
+                <button type="button" class="util">Sí</button>
+                <button type="button" class="util">No</button>
+              </footer>
+            </div>
+          </article>
+        }
+        <button type="button" class="btn btn-secundario">Ver más reseñas</button>
+      </section>
+    </div>
+  </div>
+
+  @if (formularioAbierto()) {
+    <app-modal titulo="Escribir reseña" [subtitulo]="p.nombre + ' · Talla M'" (cerrar)="formularioAbierto.set(false)">
+      <form class="formulario" (submit)="$event.preventDefault(); formularioAbierto.set(false)">
+        <fieldset class="calificar">
+          <legend>Tu calificación *</legend>
+          <div class="estrellas-entrada">
+            @for (n of calificaciones; track n) {
+              <input type="radio" name="calificacion" [id]="'calif-' + n" [value]="n" required [checked]="n === 4">
+              <label [for]="'calif-' + n" [attr.aria-label]="n + ' estrellas'">★</label>
+            }
+          </div>
+        </fieldset>
+        <div class="campo">
+          <label for="titulo-resena">Título *</label>
+          <input id="titulo-resena" name="titulo" maxlength="80" placeholder="Bonita y de buena calidad" required>
+        </div>
+        <div class="campo">
+          <label for="texto-resena">Tu reseña *</label>
+          <textarea id="texto-resena" name="comentario" maxlength="500" rows="4" placeholder="Cuéntanos qué te pareció el producto" required></textarea>
+          <span class="ayuda">Máximo 500 caracteres</span>
+        </div>
+        <label class="subir-archivo">
+          <input type="file" name="fotos" accept="image/png, image/jpeg" multiple>
+          <app-icono nombre="subir" [tamano]="20" />
+          <strong class="pequeno">Agregar fotos (opcional, máx. 3)</strong>
+        </label>
+        <label class="casilla"><input type="checkbox" name="publico" checked> Publicar con mi nombre (Carlos R.)</label>
+        <div class="modal__acciones">
+          <button type="button" class="btn btn-secundario" (click)="formularioAbierto.set(false)">Cancelar</button>
+          <button type="submit" class="btn btn-primario">Publicar reseña</button>
+        </div>
+      </form>
+    </app-modal>
+  }
+}

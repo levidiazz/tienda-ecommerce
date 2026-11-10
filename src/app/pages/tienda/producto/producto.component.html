@@ -1,0 +1,170 @@
+@if (producto(); as p) {
+  <div class="contenedor pagina">
+    <app-migas [migas]="migas()" />
+
+    <article class="producto">
+      <section class="galeria" aria-label="Fotos del producto">
+        <figure class="galeria__principal">
+          <img [src]="p.imagenes[imagenActiva()]" [alt]="p.nombre" width="700" height="546">
+        </figure>
+        @if (p.imagenes.length > 1) {
+          <ul class="galeria__miniaturas">
+            @for (img of p.imagenes; track img; let i = $index) {
+              <li>
+                <button type="button" [class.activa]="i === imagenActiva()" [attr.aria-pressed]="i === imagenActiva()" (click)="imagenActiva.set(i)">
+                  <img [src]="img" [alt]="p.nombre + ', vista ' + (i + 1)" width="150" height="110">
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+
+      <section class="info" aria-labelledby="nombre-producto">
+        <header class="info__cabecera">
+          <div>
+            @if (p.insignia) {
+              <span class="insignia" [class.insignia-oscura]="p.tipo === 'mayores'" [class.insignia-info]="p.tipo === 'digital' || p.insignia === 'Nuevo'"
+                    [class.insignia-acento]="p.precioAnterior" [class.insignia-suave]="p.tipo === 'talla'">{{ p.insignia }}</span>
+            }
+            <h1 id="nombre-producto" class="titulo-1">{{ p.nombre }}</h1>
+            <p class="pequeno texto-sec">SKU: {{ p.sku }} · {{ p.proveedor }}</p>
+          </div>
+          <button type="button" class="btn-icono" aria-label="Guardar en favoritos"><app-icono nombre="corazon" /></button>
+        </header>
+
+        <a class="calificacion" [routerLink]="['/producto', p.slug, 'resenas']">
+          <app-estrellas [valor]="p.calificacion" [tamano]="16" [texto]="p.calificacion.toFixed(1) + ' · ' + p.resenas + ' reseñas'" />
+        </a>
+
+        <p class="precio-bloque">
+          <span class="precio-grande">{{ p.precio | currency: 'MXN' : 'symbol-narrow' }}</span>
+          @if (p.precioAnterior) {
+            <del>{{ p.precioAnterior | currency: 'MXN' : 'symbol-narrow' }}</del>
+            <span class="ahorro">Ahorras {{ ahorro() | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}</span>
+          }
+        </p>
+
+        <hr class="divisor">
+
+        <form class="compra-form" (submit)="$event.preventDefault()">
+          @if (p.colores) {
+            <fieldset>
+              <legend>Color</legend>
+              <div class="colores">
+                @for (c of p.colores; track c.valor; let primero = $first) {
+                  <label class="color" [title]="c.valor">
+                    <input type="radio" name="color" [value]="c.valor" [checked]="primero" (change)="imagenActiva.set($index % p.imagenes.length)">
+                    <span [style.background]="colorCss(c.valor)"></span>
+                    <span class="sr-only">{{ c.valor }}</span>
+                  </label>
+                }
+              </div>
+            </fieldset>
+          }
+
+          @if (p.opciones) {
+            <fieldset>
+              <div class="opcion__fila">
+                <legend>{{ etiquetaOpcion() }} *</legend>
+                @if (p.tipo === 'talla') {
+                  <button type="button" class="guia" (click)="guiaAbierta.set(true)"><app-icono nombre="regla" [tamano]="18" /> Guía de tallas</button>
+                }
+              </div>
+              <div class="opciones-chip">
+                @for (o of p.opciones; track o.valor) {
+                  <label class="opcion-chip">
+                    <input type="radio" name="opcion" [value]="o.valor" [disabled]="o.agotado" required>
+                    <span>{{ o.valor }}@if (o.extra) { <small>&nbsp;{{ o.extra }}</small> }</span>
+                  </label>
+                }
+              </div>
+            </fieldset>
+          }
+
+          @if (p.tipo === 'digital') {
+            <div class="campo">
+              <label for="correo-regalo">Correo del destinatario *</label>
+              <input id="correo-regalo" type="email" name="correo" autocomplete="email" placeholder="nombre@correo.com" required>
+            </div>
+            <div class="campo">
+              <label for="mensaje-regalo">Mensaje (opcional)</label>
+              <input id="mensaje-regalo" type="text" name="mensaje" maxlength="120" placeholder="¡Feliz cumpleaños!">
+            </div>
+          }
+
+          @if (p.tipo === 'mayores') {
+            <p class="aviso aviso-suave" role="note">
+              <app-icono nombre="alerta" [tamano]="18" />
+              <span>Venta solo a mayores de 18 años. Al pagar validamos tu fecha de nacimiento y al entregar se pide una identificación oficial.</span>
+            </p>
+          }
+
+          <p class="disponibilidad" [class.sin]="p.agotado">
+            <app-icono [nombre]="p.agotado ? 'x-circulo' : 'check-circulo'" [tamano]="16" /> {{ p.disponibilidad }}
+          </p>
+
+          <div class="compra">
+            <div class="cantidad">
+              <label for="cantidad" class="sr-only">Cantidad</label>
+              <input id="cantidad" type="number" name="cantidad" value="1" min="1" max="10" inputmode="numeric">
+            </div>
+            @if (p.agotado) {
+              <button type="button" class="btn btn-primario agregar" disabled>Agotado</button>
+            } @else {
+              <a class="btn btn-primario agregar" routerLink="/carrito"><app-icono nombre="carrito" [tamano]="18" /> Agregar al carrito</a>
+              <a class="btn btn-secundario" routerLink="/checkout/direccion">Comprar ahora</a>
+            }
+          </div>
+        </form>
+
+        <ul class="tarjeta beneficios">
+          @if (p.tipo === 'digital') {
+            <li><app-icono nombre="correo" [tamano]="20" /> Se envía por correo en minutos · no requiere envío físico</li>
+          } @else {
+            <li><app-icono nombre="camion" [tamano]="20" /> Envío a todo México: llega en 3 a 5 días hábiles</li>
+          }
+          <li><app-icono nombre="devolucion" [tamano]="20" /> Cambios y devoluciones gratis durante 30 días</li>
+          <li><app-icono nombre="candado" [tamano]="20" /> Pago seguro con tarjeta o PayPal</li>
+        </ul>
+      </section>
+    </article>
+
+    <section class="detalle" aria-label="Información del producto">
+      <div class="pestanas" role="tablist">
+        <button type="button" role="tab" id="tab-descripcion" aria-controls="panel-producto" [attr.aria-selected]="pestana() === 'descripcion'" [class.activa]="pestana() === 'descripcion'" (click)="pestana.set('descripcion')">Descripción</button>
+        <button type="button" role="tab" id="tab-envio" aria-controls="panel-producto" [attr.aria-selected]="pestana() === 'envio'" [class.activa]="pestana() === 'envio'" (click)="pestana.set('envio')">Envío y devoluciones</button>
+        <a [routerLink]="['/producto', p.slug, 'resenas']">Reseñas ({{ p.resenas }})</a>
+      </div>
+      <div id="panel-producto" role="tabpanel" [attr.aria-labelledby]="'tab-' + pestana()">
+        @if (pestana() === 'descripcion') {
+          <p class="texto-sec">{{ p.descripcion }}</p>
+        } @else {
+          <p class="texto-sec">El envío estándar cuesta $99.00 y llega en 3 a 5 días hábiles. Cuando sale tu pedido te mandamos la paquetería y el número de guía. Tienes 30 días para cambios o devoluciones.</p>
+        }
+      </div>
+    </section>
+  </div>
+
+  @if (guiaAbierta()) {
+    <app-modal titulo="Guía de tallas" subtitulo="Medidas de la prenda en centímetros" (cerrar)="guiaAbierta.set(false)">
+      <table class="tabla tabla-tallas">
+        <caption class="sr-only">Medidas por talla</caption>
+        <thead><tr><th scope="col">Talla</th><th scope="col">Pecho</th><th scope="col">Largo</th><th scope="col">Hombro</th></tr></thead>
+        <tbody>
+          @for (fila of tablaTallas; track fila[0]) {
+            <tr [class.marcada]="fila[0] === 'M'">
+              <th scope="row">{{ fila[0] }}</th><td>{{ fila[1] }}</td><td>{{ fila[2] }}</td><td>{{ fila[3] }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <p class="aviso aviso-suave"><app-icono nombre="regla" [tamano]="18" /><span>Mide una playera que te quede bien, extendida: pecho de axila a axila (×2) y largo del hombro al borde inferior.</span></p>
+      <div class="modal__acciones"><button type="button" class="btn btn-primario" (click)="guiaAbierta.set(false)">Entendido</button></div>
+    </app-modal>
+  }
+} @else {
+  <div class="contenedor pagina">
+    <p class="texto-sec">No encontramos este producto. <a routerLink="/catalogo">Ver el catálogo</a></p>
+  </div>
+}

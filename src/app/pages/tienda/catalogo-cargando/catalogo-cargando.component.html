@@ -1,0 +1,28 @@
+<div class="contenedor pagina" aria-busy="true">
+  <app-migas [migas]="migas" />
+  <header class="cabecera-pagina">
+    <div>
+      <h1 class="titulo-1">Todos los productos</h1>
+      <p class="estado-carga pequeno texto-sec" role="status"><span class="spinner spinner--chico"></span> Buscando productos…</p>
+    </div>
+  </header>
+  <div class="disposicion">
+    <div class="filtros" aria-hidden="true">
+      @for (l of lineas; track l) {
+        <div class="esqueleto linea"></div>
+      }
+      <div class="esqueleto bloque"></div>
+    </div>
+    <div class="rejilla" aria-hidden="true">
+      @for (t of tarjetas; track t) {
+        <div class="tarjeta-esqueleto">
+          <div class="esqueleto imagen"></div>
+          <div class="esqueleto linea larga"></div>
+          <div class="esqueleto linea corta"></div>
+          <div class="esqueleto linea precio"></div>
+          <div class="esqueleto boton"></div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

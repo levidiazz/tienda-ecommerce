@@ -1,0 +1,38 @@
+<div class="contenedor pagina">
+  <app-migas [migas]="migas" />
+
+  <aside class="aviso-temporada" aria-label="Promoción vigente">
+    <p><span class="etiqueta-blanca">Temporada de Muertos</span> <strong>Hasta 30 % de descuento</strong></p>
+    <p class="pequeno">Termina el 2 de noviembre o hasta agotar existencias</p>
+  </aside>
+
+  <header class="cabecera-pagina">
+    <div>
+      <h1 class="titulo-1">Ofertas</h1>
+      <p class="texto-sec">{{ productos.length }} productos con descuento · el precio anterior aparece tachado</p>
+    </div>
+    <label class="ordenar">
+      <span class="texto-sec">Ordenar:</span>
+      <select name="orden">
+        <option>Mayor descuento</option>
+        <option>Menor precio</option>
+        <option>Mayor precio</option>
+      </select>
+    </label>
+  </header>
+
+  <fieldset class="categorias">
+    <legend class="sr-only">Filtrar ofertas por categoría</legend>
+    <div class="opciones-chip">
+      @for (f of filtros; track f; let primero = $first) {
+        <label class="opcion-chip"><input type="radio" name="categoria-oferta" [checked]="primero"><span>{{ f }}</span></label>
+      }
+    </div>
+  </fieldset>
+
+  <div class="rejilla-productos">
+    @for (p of productos; track p.sku) {
+      <app-tarjeta-producto [producto]="p" />
+    }
+  </div>
+</div>

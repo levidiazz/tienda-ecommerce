@@ -1,0 +1,17 @@
+.estado-carga { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.disposicion { display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: start; }
+.filtros { border: 1px solid var(--borde); padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+.linea { height: 14px; width: 80%; }
+.bloque { height: 120px; }
+.rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 24px; }
+.tarjeta-esqueleto { display: flex; flex-direction: column; gap: 10px; }
+.imagen { aspect-ratio: 1 / 1.1; }
+.larga { width: 75%; }
+.corta { width: 40%; }
+.precio { height: 22px; width: 35%; }
+.boton { height: 42px; }
+@media (max-width: 1000px) {
+  .disposicion { grid-template-columns: 1fr; }
+  .filtros { display: none; }
+  .rejilla { grid-template-columns: repeat(2, 1fr); gap: 20px 16px; }
+}

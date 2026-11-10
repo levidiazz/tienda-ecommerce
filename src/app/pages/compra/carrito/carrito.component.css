@@ -1,0 +1,7 @@
+.producto { display: flex; gap: 14px; align-items: center; }
+.producto div { display: flex; flex-direction: column; gap: 2px; }
+.cantidad { width: 72px; height: 40px; border: 1px solid var(--borde-fuerte); padding: 0 10px; font: inherit; }
+.cupon { margin-top: 28px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 700; }
+.cupon div { display: flex; gap: 8px; max-width: 420px; }
+.cupon input { flex: 1; height: 44px; border: 1px solid var(--borde-fuerte); padding: 0 12px; font: inherit; font-weight: 400; }
+.seguro { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 12px; }

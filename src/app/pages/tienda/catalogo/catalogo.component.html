@@ -1,0 +1,122 @@
+<div class="contenedor pagina">
+  <app-migas [migas]="migas()" />
+
+  <header class="cabecera-pagina">
+    <div>
+      <h1 class="titulo-1">{{ categoriaActual()?.nombre ?? 'Todos los productos' }}</h1>
+      <p class="texto-sec pequeno">{{ productos().length }} productos</p>
+    </div>
+    <div class="cabecera__acciones">
+      <button type="button" class="btn btn-secundario boton-filtros" (click)="filtrosAbiertos.set(true)" aria-controls="filtros" [attr.aria-expanded]="filtrosAbiertos()">
+        <app-icono nombre="filtro" [tamano]="16" /> Filtros
+      </button>
+      <label class="ordenar">
+        <span class="texto-sec">Ordenar:</span>
+        <select name="orden">
+          <option value="relevancia">Relevancia</option>
+          <option value="menor">Menor precio</option>
+          <option value="mayor">Mayor precio</option>
+          <option value="calificacion">Mejor calificados</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <div class="disposicion">
+    <aside id="filtros" class="filtros" [class.abiertos]="filtrosAbiertos()" aria-labelledby="titulo-filtros">
+      <form class="filtros__form" (submit)="$event.preventDefault(); filtrosAbiertos.set(false)">
+        <div class="filtros__titulo">
+          <h2 id="titulo-filtros"><app-icono nombre="filtro" [tamano]="18" /> Filtros</h2>
+          <button type="button" class="cerrar-filtros" (click)="filtrosAbiertos.set(false)" aria-label="Cerrar filtros"><app-icono nombre="cerrar" /></button>
+        </div>
+
+        <fieldset>
+          <legend>Categoría</legend>
+          <ul class="arbol">
+            @for (c of categorias; track c.slug) {
+              <li>
+                <label class="casilla">
+                  <input type="checkbox" name="categoria" [value]="c.slug" [checked]="c.slug === categoria()">
+                  <span>{{ c.nombre }}</span>
+                  <span class="conteo">({{ contar(c.slug) }})</span>
+                </label>
+                @if (c.slug === categoria()) {
+                  <ul class="arbol__sub" [attr.aria-label]="'Subcategorías de ' + c.nombre">
+                    @for (s of c.subcategorias; track s) {
+                      <li>
+                        <label class="casilla">
+                          <input type="checkbox" name="subcategoria" [value]="s">
+                          <span>{{ s }}</span>
+                          <span class="conteo">({{ contarSub(s) }})</span>
+                        </label>
+                      </li>
+                    }
+                  </ul>
+                }
+              </li>
+            }
+          </ul>
+        </fieldset>
+
+        <fieldset>
+          <legend>Talla</legend>
+          <div class="opciones-chip">
+            @for (t of tallas; track t) {
+              <label class="opcion-chip"><input type="checkbox" name="talla" [value]="t"><span>{{ t }}</span></label>
+            }
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Precio</legend>
+          <div class="precios">
+            <label class="sr-only" for="precio-min">Precio mínimo</label>
+            <input id="precio-min" name="min" type="number" min="0" step="1" placeholder="$ Mín" inputmode="numeric">
+            <label class="sr-only" for="precio-max">Precio máximo</label>
+            <input id="precio-max" name="max" type="number" min="0" step="1" placeholder="$ Máx" inputmode="numeric">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Más filtros</legend>
+          <label class="interruptor">
+            <span>En oferta</span>
+            <input type="checkbox" name="oferta" role="switch">
+            <span class="interruptor__pista" aria-hidden="true"></span>
+          </label>
+          <label class="interruptor">
+            <span>Solo disponibles</span>
+            <input type="checkbox" name="disponibles" role="switch" checked>
+            <span class="interruptor__pista" aria-hidden="true"></span>
+          </label>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primario btn-bloque"><app-icono nombre="check" [tamano]="16" /> Aplicar filtros</button>
+        <button type="reset" class="btn btn-secundario btn-bloque"><app-icono nombre="cerrar" [tamano]="16" /> Limpiar</button>
+      </form>
+    </aside>
+    @if (filtrosAbiertos()) {
+      <div class="velo" (click)="filtrosAbiertos.set(false)" aria-hidden="true"></div>
+    }
+
+    <section class="resultados" aria-label="Productos">
+      @if (categoriaActual(); as actual) {
+        <p class="chips-activos">
+          <a routerLink="/catalogo" class="chip-activo">{{ actual.nombre }} <app-icono nombre="cerrar" [tamano]="12" [grosor]="2.4" /><span class="sr-only">Quitar filtro</span></a>
+          <a routerLink="/catalogo" class="limpiar">Limpiar todo</a>
+        </p>
+      }
+      <div class="rejilla">
+        @for (p of productos(); track p.sku) {
+          <app-tarjeta-producto [producto]="p" />
+        }
+      </div>
+      <nav class="paginacion" aria-label="Paginación">
+        <a routerLink="/catalogo" class="btn-icono" aria-label="Página anterior"><app-icono nombre="izquierda" [tamano]="16" /></a>
+        <a routerLink="/catalogo" class="btn-icono actual" aria-current="page">1</a>
+        <a routerLink="/catalogo" class="btn-icono">2</a>
+        <a routerLink="/catalogo" class="btn-icono" aria-label="Página siguiente"><app-icono nombre="derecha" [tamano]="16" /></a>
+      </nav>
+    </section>
+  </div>
+</div>
