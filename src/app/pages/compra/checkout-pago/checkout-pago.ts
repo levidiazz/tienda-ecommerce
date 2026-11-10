@@ -7,7 +7,7 @@ import { ResumenPedidoComponent } from '../../../shared/resumen-pedido/resumen-p
 
 
 @Component({
-  selector: 'checkout-pago',
+  selector: 'app-checkout-pago',
   imports: [RouterLink, IconoComponent, PasosCheckout, ResumenPedidoComponent],
   templateUrl: './checkout-pago.html',
   styleUrl: './checkout-pago.css'

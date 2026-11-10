@@ -1,0 +1,93 @@
+<a routerLink="/cuenta/pedidos" class="volver pequeno"
+  ><app-icono nombre="izquierda" [tamano]="14" /> Mis pedidos</a
+>
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Pedido #{{ pedido().numero }}</h1>
+    <p class="texto-sec">Realizado el {{ pedido().fecha }}</p>
+  </div>
+  <div class="acciones">
+    <span class="insignia" [class]="'estado--' + pedido().estado"
+      >{{ pedido().estadoTexto }}</span
+    >
+    <button type="button" class="btn btn-secundario">
+      <app-icono nombre="descargar" [tamano]="16" /> Descargar comprobante
+    </button>
+  </div>
+</header>
+
+<section class="tarjeta" aria-labelledby="titulo-seguimiento">
+  <h2 id="titulo-seguimiento" class="titulo-3">Seguimiento</h2>
+  <ol class="linea-tiempo">
+    @for (s of seguimiento; track s.titulo) {
+    <li [class.hecho]="s.hecho">
+      <span class="punto" aria-hidden="true"
+        >@if (s.hecho) {
+        <app-icono nombre="check" [tamano]="12" [grosor]="3" /> }</span
+      >
+      <strong>{{ s.titulo }}</strong>
+      <span class="pequeno texto-sec">{{ s.fecha }}</span>
+    </li>
+    }
+  </ol>
+</section>
+
+<div class="detalle">
+  <section class="tarjeta" aria-labelledby="titulo-articulos">
+    <h2 id="titulo-articulos" class="titulo-3">Productos</h2>
+    <ul class="articulos">
+      @for (item of productos; track item.nombre) {
+      <li>
+        <img [src]="item.imagen" [alt]="item.nombre" width="56" height="56" />
+        <div>
+          <strong>{{ item.nombre }}</strong>
+          <span class="pequeno texto-sec"
+            >@if (item.detalle) { {{ item.detalle }} · }{{ item.cantidad }} × {{
+            item.precio | currency: 'MXN' : 'symbol-narrow' }}</span
+          >
+        </div>
+        <span
+          >{{ item.cantidad * item.precio | currency: 'MXN' : 'symbol-narrow'
+          }}</span
+        >
+      </li>
+      }
+    </ul>
+  </section>
+
+  <div class="lateral">
+    <section class="tarjeta" aria-labelledby="titulo-entrega">
+      <h2 id="titulo-entrega" class="titulo-3">Entrega</h2>
+      <address>
+        <strong>{{ direccion.receptor }}</strong><br />
+        {{ direccion.calle }}<br />
+        {{ direccion.ciudad }}<br />
+        Tel. {{ direccion.telefono }}
+      </address>
+    </section>
+    <section class="tarjeta" aria-labelledby="titulo-pago">
+      <h2 id="titulo-pago" class="titulo-3">Pago</h2>
+      <dl>
+        <div>
+          <dt>Visa ···· 4242</dt>
+          <dd>Aprobado</dd>
+        </div>
+        <div>
+          <dt>Subtotal</dt>
+          <dd>{{ resumen.subtotal | currency: 'MXN' : 'symbol-narrow' }}</dd>
+        </div>
+        <div>
+          <dt>Envío</dt>
+          <dd>{{ resumen.envio | currency: 'MXN' : 'symbol-narrow' }}</dd>
+        </div>
+        <div class="total">
+          <dt>Total</dt>
+          <dd>{{ resumen.total | currency: 'MXN' : 'symbol-narrow' }}</dd>
+        </div>
+      </dl>
+    </section>
+    <a routerLink="/ayuda" class="btn btn-fantasma"
+      ><app-icono nombre="chat" [tamano]="16" /> ¿Problemas con tu pedido?</a
+    >
+  </div>
+</div>

@@ -5,7 +5,7 @@ import { RESUMEN } from '../../../data/contenido';
 import { IconoComponent } from '../../../shared/icono/icono.component';
 
 @Component({
-  selector: 'pago-aprobado',
+  selector: 'app-pago-aprobado',
   imports: [RouterLink, CurrencyPipe, IconoComponent],
   templateUrl: './pago-aprobado.html',
   styleUrl: '../pago-resultado.css'
