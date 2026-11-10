@@ -1,0 +1,46 @@
+<div class="admin">
+  <aside class="lateral" [class.abierto]="menuAbierto()" aria-label="Menú del panel">
+    <div class="lateral__marca">
+      <span class="logo">LOGO</span>
+      <span>Panel admin</span>
+    </div>
+    <nav>
+      <ul>
+        @for (enlace of enlaces; track enlace.ruta) {
+          <li>
+            <a [routerLink]="enlace.ruta" routerLinkActive="activo" ariaCurrentWhenActive="page" (click)="menuAbierto.set(false)">
+              <app-icono [nombre]="enlace.icono" [tamano]="18" /> {{ enlace.texto }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+    <a routerLink="/cuenta/iniciar-sesion" class="salir"><app-icono nombre="salir" [tamano]="18" /> Cerrar sesión</a>
+  </aside>
+  @if (menuAbierto()) {
+    <div class="velo" (click)="menuAbierto.set(false)" aria-hidden="true"></div>
+  }
+
+  <div class="principal">
+    <header class="barra">
+      <button type="button" class="hamburguesa" (click)="menuAbierto.set(true)" aria-label="Abrir menú del panel" [attr.aria-expanded]="menuAbierto()">
+        <app-icono nombre="menu" [tamano]="22" />
+      </button>
+      <form class="buscar" role="search">
+        <label for="buscar-panel" class="sr-only">Buscar en el panel</label>
+        <app-icono nombre="buscar" [tamano]="16" />
+        <input id="buscar-panel" type="search" placeholder="Buscar en el panel">
+      </form>
+      <div class="usuario">
+        <span class="avatar" aria-hidden="true">AP</span>
+        <div>
+          <strong>Admin Principal</strong>
+          <span>Administrador</span>
+        </div>
+      </div>
+    </header>
+    <main class="contenido">
+      <router-outlet />
+    </main>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Categorías</h1>
+    <p class="texto-sec">Organiza el catálogo en categorías y subcategorías</p>
+  </div>
+  <button type="button" class="btn btn-primario" (click)="formularioAbierto.set(true)"><app-icono nombre="mas" [tamano]="16" /> Nueva categoría</button>
+</header>
+
+<ul class="categorias">
+  @for (c of categorias; track c.slug) {
+    <li>
+      <article class="tarjeta categoria">
+        <header>
+          <h2 class="titulo-3"><app-icono nombre="etiqueta" [tamano]="18" /> {{ c.nombre }}</h2>
+          <span class="insignia insignia-suave">{{ conteo(c.slug) }} productos</span>
+        </header>
+        <p class="pequeno texto-sec">/{{ c.slug }}</p>
+        <ul class="subcategorias">
+          @for (s of c.subcategorias; track s) {
+            <li class="chip">{{ s }}</li>
+          }
+        </ul>
+        <footer class="acciones-tabla">
+          <button type="button" class="btn-icono" [attr.aria-label]="'Editar ' + c.nombre" (click)="formularioAbierto.set(true)"><app-icono nombre="editar" [tamano]="16" /></button>
+          <button type="button" class="btn-icono" [attr.aria-label]="'Eliminar ' + c.nombre"><app-icono nombre="basura" [tamano]="16" /></button>
+        </footer>
+      </article>
+    </li>
+  }
+</ul>
+
+@if (formularioAbierto()) {
+  <app-modal titulo="Categoría" [ancho]="520" (cerrar)="formularioAbierto.set(false)">
+    <form class="formulario" (submit)="$event.preventDefault(); formularioAbierto.set(false)">
+      <div class="campo">
+        <label for="cat-nombre">Nombre *</label>
+        <input id="cat-nombre" name="nombre" maxlength="80" required>
+      </div>
+      <div class="campo">
+        <label for="cat-padre">Categoría padre</label>
+        <select id="cat-padre" name="padre">
+          <option value="">Ninguna (categoría principal)</option>
+          @for (c of categorias; track c.slug) { <option [value]="c.slug">{{ c.nombre }}</option> }
+        </select>
+      </div>
+      <div class="campo">
+        <label for="cat-descripcion">Descripción</label>
+        <textarea id="cat-descripcion" name="descripcion" rows="3" maxlength="255"></textarea>
+      </div>
+      <label class="interruptor"><span>Visible en la tienda</span><input type="checkbox" name="activa" checked><span class="interruptor__pista" aria-hidden="true"></span></label>
+      <div class="modal__acciones">
+        <button type="button" class="btn btn-secundario" (click)="formularioAbierto.set(false)">Cancelar</button>
+        <button type="submit" class="btn btn-primario">Guardar</button>
+      </div>
+    </form>
+  </app-modal>
+}

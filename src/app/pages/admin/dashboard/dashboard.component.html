@@ -1,0 +1,102 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Dashboard</h1>
+    <p class="texto-sec">Resumen de los últimos 7 días</p>
+  </div>
+  <label class="sr-only" for="periodo-dashboard">Periodo</label>
+  <select id="periodo-dashboard" class="selector"><option>Últimos 7 días</option><option>Últimos 30 días</option><option>Este año</option></select>
+</header>
+
+<section class="kpis" aria-label="Indicadores">
+  <article class="kpi">
+    <span class="pequeno texto-sec">Ventas</span>
+    <strong>{{ 50546 | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}</strong>
+    <span class="sube">▲ 12% vs semana anterior</span>
+  </article>
+  <article class="kpi">
+    <span class="pequeno texto-sec">Pedidos</span>
+    <strong>6</strong>
+    <span class="sube">▲ 2 más</span>
+  </article>
+  <article class="kpi">
+    <span class="pequeno texto-sec">Clientes nuevos</span>
+    <strong>4</strong>
+    <span class="sube">▲ 33%</span>
+  </article>
+  <article class="kpi">
+    <span class="pequeno texto-sec">Ticket promedio</span>
+    <strong>{{ 5422 | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}</strong>
+    <span class="baja">▼ 4%</span>
+  </article>
+</section>
+
+<div class="rejilla">
+  <section class="tarjeta grafica" aria-labelledby="titulo-ventas">
+    <h2 id="titulo-ventas" class="titulo-3">Ventas por día</h2>
+    <ul class="barras">
+      @for (v of ventas; track v.dia) {
+        <li>
+          <span class="barra" [style.height.%]="v.monto / maximo * 100" [attr.title]="v.monto"></span>
+          <span class="pequeno texto-sec">{{ v.dia }}</span>
+          <span class="sr-only">{{ v.monto | currency: 'MXN' : 'symbol-narrow' }}</span>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="tarjeta" aria-labelledby="titulo-vendidos">
+    <h2 id="titulo-vendidos" class="titulo-3">Más vendidos</h2>
+    <ol class="lista">
+      @for (p of masVendidos; track p.nombre) {
+        <li>
+          <img [src]="p.imagen" [alt]="p.nombre" width="40" height="40">
+          <span>{{ p.nombre }}</span>
+          <strong>{{ p.unidades }} u.</strong>
+        </li>
+      }
+    </ol>
+  </section>
+</div>
+
+<div class="rejilla">
+  <section aria-labelledby="titulo-recientes">
+    <div class="tabla-envoltura">
+      <table class="tabla">
+        <caption id="titulo-recientes">Pedidos recientes</caption>
+        <thead>
+          <tr>
+            <th scope="col">Pedido</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Estado</th>
+            <th scope="col" class="num">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of pedidos; track p.numero) {
+            <tr>
+              <td><a routerLink="/admin/pedidos"><strong>#{{ p.numero }}</strong></a></td>
+              <td>{{ p.cliente }}</td>
+              <td>{{ p.fecha }}</td>
+              <td><span class="insignia" [class]="'estado--' + p.estado">{{ p.estadoTexto }}</span></td>
+              <td class="num">{{ p.total | currency: 'MXN' : 'symbol-narrow' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="tarjeta" aria-labelledby="titulo-stock">
+    <h2 id="titulo-stock" class="titulo-3"><app-icono nombre="alerta" [tamano]="18" /> Stock bajo</h2>
+    <ul class="lista">
+      @for (s of stockBajo; track s.sku) {
+        <li>
+          <span><strong>{{ s.nombre }}</strong><br><span class="pequeno texto-sec">{{ s.sku }}</span></span>
+          <span class="stock-bajo">{{ s.stock === 0 ? 'Agotado' : s.stock + ' pzas' }}</span>
+        </li>
+      }
+    </ul>
+    <a routerLink="/admin/productos" class="btn btn-secundario btn-bloque">Ver inventario</a>
+  </section>
+</div>

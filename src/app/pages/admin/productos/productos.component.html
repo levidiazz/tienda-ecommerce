@@ -1,0 +1,171 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Productos</h1>
+    <p class="texto-sec">{{ productos.length }} productos en el catálogo</p>
+  </div>
+  <button type="button" class="btn btn-primario" (click)="formularioAbierto.set(true)"><app-icono nombre="mas" [tamano]="16" /> Nuevo producto</button>
+</header>
+
+<form class="barra-herramientas" role="search" (submit)="$event.preventDefault()">
+  <label class="buscador-panel">
+    <app-icono nombre="buscar" [tamano]="16" />
+    <span class="sr-only">Buscar producto</span>
+    <input type="search" name="q" placeholder="Buscar por nombre o SKU">
+  </label>
+  <label class="sr-only" for="filtro-categoria">Categoría</label>
+  <select id="filtro-categoria" class="selector" name="categoria">
+    <option value="">Todas las categorías</option>
+    @for (c of categorias; track c.slug) { <option [value]="c.slug">{{ c.nombre }}</option> }
+  </select>
+  <label class="sr-only" for="filtro-estado">Estado</label>
+  <select id="filtro-estado" class="selector" name="estado">
+    <option value="">Todos los estados</option>
+    <option>Activo</option>
+    <option>Agotado</option>
+    <option>Inactivo</option>
+  </select>
+  <button type="button" class="btn btn-secundario"><app-icono nombre="descargar" [tamano]="16" /> Exportar</button>
+</form>
+
+<div class="tabla-envoltura">
+  <table class="tabla">
+    <caption class="sr-only">Listado de productos</caption>
+    <thead>
+      <tr>
+        <th scope="col">Producto</th>
+        <th scope="col">SKU</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Proveedor</th>
+        <th scope="col" class="num">Precio</th>
+        <th scope="col">Estado</th>
+        <th scope="col"><span class="sr-only">Acciones</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of productos; track p.sku) {
+        <tr>
+          <td>
+            <div class="celda-producto">
+              <img class="miniatura" [src]="p.imagenes[0]" [alt]="p.nombre" width="40" height="40">
+              <div><strong>{{ p.nombre }}</strong><span class="pequeno texto-sec">{{ p.subcategoria }}</span></div>
+            </div>
+          </td>
+          <td>{{ p.sku }}</td>
+          <td>{{ p.categoria }}</td>
+          <td>{{ p.proveedor }}</td>
+          <td class="num">{{ p.precio | currency: 'MXN' : 'symbol-narrow' }}</td>
+          <td>
+            @if (p.agotado) { <span class="insignia estado--cancelado">Agotado</span> } @else { <span class="insignia estado--entregado">Activo</span> }
+          </td>
+          <td>
+            <div class="acciones-tabla">
+              <button type="button" class="btn-icono" [attr.aria-label]="'Editar ' + p.nombre" (click)="formularioAbierto.set(true)"><app-icono nombre="editar" [tamano]="16" /></button>
+              <button type="button" class="btn-icono" [attr.aria-label]="'Eliminar ' + p.nombre" (click)="eliminarAbierto.set(p.nombre)"><app-icono nombre="basura" [tamano]="16" /></button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+<div class="paginacion">
+  <span class="texto-sec">Mostrando 1 – {{ productos.length }} de {{ productos.length }}</span>
+  <nav aria-label="Paginación de productos">
+    <ul>
+      <li><button type="button" aria-label="Página anterior" disabled>‹</button></li>
+      <li><button type="button" aria-current="page">1</button></li>
+      <li><button type="button" aria-label="Página siguiente" disabled>›</button></li>
+    </ul>
+  </nav>
+</div>
+
+@if (formularioAbierto()) {
+  <app-modal titulo="Nuevo producto" subtitulo="Los campos con * son obligatorios" [ancho]="760" (cerrar)="formularioAbierto.set(false)">
+    <form class="formulario" (submit)="$event.preventDefault(); formularioAbierto.set(false)">
+      <div class="fila-2">
+        <div class="campo">
+          <label for="prod-nombre">Nombre *</label>
+          <input id="prod-nombre" name="nombre" maxlength="150" required>
+        </div>
+        <div class="campo">
+          <label for="prod-sku">SKU *</label>
+          <input id="prod-sku" name="sku" maxlength="40" pattern="[A-Z0-9-]+" placeholder="ROPA-003" required>
+          <span class="ayuda">Mayúsculas, números y guiones</span>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="prod-descripcion">Descripción</label>
+        <textarea id="prod-descripcion" name="descripcion" rows="3" maxlength="1000"></textarea>
+      </div>
+      <div class="fila-3">
+        <div class="campo">
+          <label for="prod-categoria">Categoría *</label>
+          <select id="prod-categoria" name="categoria" required>
+            <option value="">Selecciona</option>
+            @for (c of categorias; track c.slug) {
+              <optgroup [label]="c.nombre">
+                @for (s of c.subcategorias; track s) { <option>{{ s }}</option> }
+              </optgroup>
+            }
+          </select>
+        </div>
+        <div class="campo">
+          <label for="prod-proveedor">Proveedor *</label>
+          <select id="prod-proveedor" name="proveedor" required>
+            <option value="">Selecciona</option>
+            @for (p of proveedores; track p.nombre) { <option>{{ p.nombre }}</option> }
+          </select>
+        </div>
+        <div class="campo">
+          <label for="prod-tipo">Tipo de variante</label>
+          <select id="prod-tipo" name="tipo">
+            <option value="simple">Sin variantes</option>
+            <option value="talla">Talla</option>
+            <option value="numero">Número</option>
+            <option value="version">Versión</option>
+            <option value="presentacion">Presentación</option>
+            <option value="digital">Digital</option>
+          </select>
+        </div>
+      </div>
+      <div class="fila-3">
+        <div class="campo">
+          <label for="prod-precio">Precio *</label>
+          <input id="prod-precio" name="precio" type="number" min="0" step="0.01" inputmode="decimal" required>
+        </div>
+        <div class="campo">
+          <label for="prod-anterior">Precio anterior</label>
+          <input id="prod-anterior" name="precioAnterior" type="number" min="0" step="0.01" inputmode="decimal">
+        </div>
+        <div class="campo">
+          <label for="prod-stock">Stock *</label>
+          <input id="prod-stock" name="stock" type="number" min="0" step="1" required>
+        </div>
+      </div>
+      <label class="subir-archivo">
+        <input type="file" name="imagenes" accept="image/png, image/jpeg, image/webp" multiple>
+        <app-icono nombre="subir" [tamano]="22" />
+        <strong class="pequeno">Arrastra o elige las imágenes</strong>
+        <span class="pequeno texto-sec">JPG, PNG o WEBP · máx. 2 MB</span>
+      </label>
+      <div class="interruptores">
+        <label class="interruptor"><span>Producto activo</span><input type="checkbox" name="activo" checked><span class="interruptor__pista" aria-hidden="true"></span></label>
+        <label class="interruptor"><span>Solo mayores de 18</span><input type="checkbox" name="mayores"><span class="interruptor__pista" aria-hidden="true"></span></label>
+      </div>
+      <div class="modal__acciones">
+        <button type="button" class="btn btn-secundario" (click)="formularioAbierto.set(false)">Cancelar</button>
+        <button type="submit" class="btn btn-primario">Guardar producto</button>
+      </div>
+    </form>
+  </app-modal>
+}
+
+@if (eliminarAbierto(); as nombre) {
+  <app-modal titulo="¿Eliminar producto?" [subtitulo]="nombre" [ancho]="440" (cerrar)="eliminarAbierto.set(null)">
+    <p class="texto-sec">Dejará de mostrarse en la tienda. Los pedidos anteriores no se modifican.</p>
+    <div class="modal__acciones">
+      <button type="button" class="btn btn-secundario" (click)="eliminarAbierto.set(null)">Cancelar</button>
+      <button type="button" class="btn btn-peligro" (click)="eliminarAbierto.set(null)">Eliminar</button>
+    </div>
+  </app-modal>
+}
