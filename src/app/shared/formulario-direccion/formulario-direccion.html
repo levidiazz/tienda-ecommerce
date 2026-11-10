@@ -1,0 +1,129 @@
+<form class="formulario" (submit)="$event.preventDefault(); guardar.emit()">
+  <div class="fila-2">
+    <div class="campo">
+      <label for="dir-alias">Alias *</label>
+      <input
+        id="dir-alias"
+        name="alias"
+        maxlength="40"
+        placeholder="Casa, Oficina…"
+        required
+      />
+    </div>
+    <div class="campo">
+      <label for="dir-receptor">Nombre de quien recibe *</label>
+      <input
+        id="dir-receptor"
+        name="receptor"
+        maxlength="120"
+        autocomplete="name"
+        required
+      />
+    </div>
+  </div>
+  <div class="fila-3">
+    <div class="campo">
+      <label for="dir-calle">Calle *</label>
+      <input
+        id="dir-calle"
+        name="calle"
+        maxlength="150"
+        autocomplete="address-line1"
+        required
+      />
+    </div>
+    <div class="campo">
+      <label for="dir-exterior">Núm. exterior *</label>
+      <input id="dir-exterior" name="numeroExterior" maxlength="10" required />
+    </div>
+    <div class="campo">
+      <label for="dir-interior">Núm. interior</label>
+      <input id="dir-interior" name="numeroInterior" maxlength="10" />
+    </div>
+  </div>
+  <div class="fila-2">
+    <div class="campo">
+      <label for="dir-colonia">Colonia *</label>
+      <input
+        id="dir-colonia"
+        name="colonia"
+        maxlength="100"
+        autocomplete="address-level3"
+        required
+      />
+    </div>
+    <div class="campo">
+      <label for="dir-cp">Código postal *</label>
+      <input
+        id="dir-cp"
+        name="codigoPostal"
+        inputmode="numeric"
+        pattern="[0-9]{5}"
+        maxlength="5"
+        autocomplete="postal-code"
+        required
+      />
+      <span class="ayuda">5 dígitos</span>
+    </div>
+  </div>
+  <div class="fila-2">
+    <div class="campo">
+      <label for="dir-ciudad">Ciudad *</label>
+      <input
+        id="dir-ciudad"
+        name="ciudad"
+        maxlength="100"
+        autocomplete="address-level2"
+        required
+      />
+    </div>
+    <div class="campo">
+      <label for="dir-estado">Estado *</label>
+      <select
+        id="dir-estado"
+        name="estado"
+        autocomplete="address-level1"
+        required
+      >
+        <option value="">Selecciona</option>
+        <option>Oaxaca</option>
+        <option>Puebla</option>
+        <option>Ciudad de México</option>
+        <option>Jalisco</option>
+        <option>Nuevo León</option>
+      </select>
+    </div>
+  </div>
+  <div class="campo">
+    <label for="dir-telefono">Teléfono *</label>
+    <input
+      id="dir-telefono"
+      name="telefono"
+      type="tel"
+      inputmode="tel"
+      pattern="[0-9 ]{10,14}"
+      autocomplete="tel"
+      required
+    />
+  </div>
+  <div class="campo">
+    <label for="dir-referencias">Referencias</label>
+    <textarea
+      id="dir-referencias"
+      name="referencias"
+      maxlength="255"
+      rows="2"
+      placeholder="Entre calles, color de la casa…"
+    ></textarea>
+  </div>
+  <label class="casilla"
+    ><input type="checkbox" name="principal" /> Usar como dirección
+    principal</label
+  >
+  <div class="modal__acciones">
+    <button type="button" class="btn btn-secundario" (click)="cancelar.emit()">
+      Cancelar
+    </button>
+    <button type="submit" class="btn btn-primario">Guardar dirección</button>
+  </div>
+</form>

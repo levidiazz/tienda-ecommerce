@@ -1,0 +1,78 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Mis reseñas</h1>
+    <p class="texto-sec">Tu opinión ayuda a otros clientes a decidir.</p>
+  </div>
+</header>
+
+<div class="pestanas" role="tablist" aria-label="Reseñas">
+  <button
+    type="button"
+    role="tab"
+    id="tab-pendientes"
+    aria-controls="panel-pendientes"
+    [attr.aria-selected]="pestana() === 'pendientes'"
+    [class.activa]="pestana() === 'pendientes'"
+    (click)="pestana.set('pendientes')"
+  >
+    Por calificar ({{ pendientes.length }})
+  </button>
+  <button
+    type="button"
+    role="tab"
+    id="tab-publicadas"
+    aria-controls="panel-publicadas"
+    [attr.aria-selected]="pestana() === 'publicadas'"
+    [class.activa]="pestana() === 'publicadas'"
+    (click)="pestana.set('publicadas')"
+  >
+    Publicadas ({{ publicadas.length }})
+  </button>
+</div>
+
+@if (pestana() === 'pendientes') {
+<ul
+  id="panel-pendientes"
+  role="tabpanel"
+  aria-labelledby="tab-pendientes"
+  class="lista"
+>
+  @for (p of pendientes; track p.slug) {
+  <li class="tarjeta fila">
+    <img [src]="p.imagen" [alt]="p.nombre" width="72" height="72" />
+    <div class="info">
+      <strong>{{ p.nombre }}</strong>
+      <span class="pequeno texto-sec">{{ p.entrega }}</span>
+    </div>
+    <a [routerLink]="['/producto', p.slug, 'resenas']" class="btn btn-primario"
+      ><app-icono nombre="estrella" [tamano]="16" /> Calificar</a
+    >
+  </li>
+  }
+</ul>
+} @else {
+<ul
+  id="panel-publicadas"
+  role="tabpanel"
+  aria-labelledby="tab-publicadas"
+  class="lista"
+>
+  @for (r of publicadas; track r.slug) {
+  <li class="tarjeta fila resena">
+    <img [src]="r.imagen" [alt]="r.producto" width="72" height="72" />
+    <div class="info">
+      <a [routerLink]="['/producto', r.slug]"
+        ><strong>{{ r.producto }}</strong></a
+      >
+      <app-estrellas [valor]="r.calificacion" />
+      <strong class="pequeno">{{ r.titulo }}</strong>
+      <p class="pequeno texto-sec">{{ r.texto }}</p>
+      <span class="pequeno texto-sec">Publicada el {{ r.fecha }}</span>
+    </div>
+    <button type="button" class="btn btn-secundario">
+      <app-icono nombre="editar" [tamano]="16" /> Editar
+    </button>
+  </li>
+  }
+</ul>
+}

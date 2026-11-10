@@ -1,0 +1,8 @@
+.direcciones { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.direccion { display: flex; flex-direction: column; gap: 12px; height: 100%; }
+.direccion.principal { border: 2px solid var(--borde-fuerte); padding: 23px; }
+.direccion header { display: flex; justify-content: space-between; align-items: center; }
+.direccion h2 { display: flex; align-items: center; gap: 8px; }
+address { font-style: normal; font-size: 14px; line-height: 1.6; }
+.direccion footer { display: flex; gap: 4px; flex-wrap: wrap; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--borde); }
+@media (max-width: 800px) { .direcciones { grid-template-columns: 1fr; } }

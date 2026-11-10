@@ -1,0 +1,52 @@
+<header class="cabecera-pagina">
+  <div>
+    <h1 class="titulo-1">Mis pedidos</h1>
+    <p class="texto-sec">{{ pedidos.length }} pedidos en los últimos 6 meses</p>
+  </div>
+  <label class="sr-only" for="periodo-pedidos">Periodo</label>
+  <select id="periodo-pedidos" class="selector"><option>Últimos 6 meses</option><option>2025</option></select>
+</header>
+
+<div class="pestanas" role="group" aria-label="Filtrar pedidos">
+  <button type="button" class="activa" aria-pressed="true">Todos</button>
+  <button type="button" aria-pressed="false">En proceso</button>
+  <button type="button" aria-pressed="false">Entregados</button>
+  <button type="button" aria-pressed="false">Cancelados</button>
+</div>
+
+<ul class="lista-pedidos">
+  @for (p of pedidos; track p.numero) {
+    <li>
+      <article class="tarjeta pedido">
+        <header>
+          <div>
+            <h2 class="titulo-3">Pedido #{{ p.numero }}</h2>
+            <p class="pequeno texto-sec">Realizado el {{ p.fecha }}</p>
+          </div>
+          <span class="insignia" [class]="'estado--' + p.estado">{{ p.estadoTexto }}</span>
+        </header>
+        <div class="pedido__cuerpo">
+          <ul class="miniaturas">
+            @for (img of p.imagenes; track $index) {
+              <li><img [src]="img" alt="" width="64" height="64" loading="lazy"></li>
+            }
+          </ul>
+          <div class="pedido__texto">
+            <p>{{ p.productos }}</p>
+            <p class="pequeno texto-sec">{{ p.nota }}</p>
+          </div>
+          <div class="pedido__total">
+            <span class="pequeno texto-sec">Total</span>
+            <strong>{{ p.total | currency: 'MXN' : 'symbol-narrow' }}</strong>
+          </div>
+        </div>
+        <footer>
+          <a [routerLink]="['/cuenta/pedidos', p.numero]" class="btn btn-secundario">Ver detalle</a>
+          @if (p.estado === 'entregado') {
+            <a routerLink="/cuenta/resenas" class="btn btn-fantasma">Calificar productos</a>
+          }
+        </footer>
+      </article>
+    </li>
+  }
+</ul>

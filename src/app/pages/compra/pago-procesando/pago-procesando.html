@@ -1,0 +1,25 @@
+<section
+  class="contenedor pagina resultado"
+  aria-labelledby="titulo-procesando"
+  aria-busy="true"
+>
+  <span class="spinner" role="status" aria-label="Procesando"></span>
+  <h1 id="titulo-procesando" class="titulo-1">Procesando tu pago…</h1>
+  <p class="texto-sec">
+    No cierres ni recargues esta página. Esto puede tardar unos segundos.
+  </p>
+  <ol class="pasos-pago">
+    <li class="hecho">
+      <app-icono nombre="check-circulo" [tamano]="18" /> Pedido registrado
+    </li>
+    <li class="actual">
+      <span class="spinner spinner--chico" aria-hidden="true"></span> Validando
+      pago con el banco
+    </li>
+    <li><app-icono nombre="recibo" [tamano]="18" /> Generando comprobante</li>
+  </ol>
+  <nav class="enlaces-estado" aria-label="Resultados posibles">
+    <a routerLink="/pago/aprobado">Ver pago aprobado</a>
+    <a routerLink="/pago/rechazado">Ver pago rechazado</a>
+  </nav>
+</section>

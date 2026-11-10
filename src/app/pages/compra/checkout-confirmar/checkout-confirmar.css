@@ -1,0 +1,63 @@
+.revision {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.revision h2 {
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.producto {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.dato header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.dato header a {
+  text-decoration: underline;
+  font-weight: 700;
+}
+.dato address {
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.total {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.total dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.total dl div {
+  display: flex;
+  justify-content: space-between;
+}
+.total dd {
+  margin: 0;
+  font-weight: 700;
+}
+.gran-total {
+  border-top: 1px solid var(--borde);
+  padding-top: 12px;
+  font-size: 18px;
+}
+.total form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.total form a:not(.btn) {
+  text-decoration: underline;
+}

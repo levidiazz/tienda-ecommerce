@@ -1,0 +1,60 @@
+ol {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--texto-sec);
+  font-size: 14px;
+}
+.numero {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--texto-sec);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+.actual {
+  color: var(--texto);
+  font-weight: 700;
+}
+.actual .numero {
+  background: var(--primario);
+  border-color: var(--primario);
+  color: var(--texto-inv);
+}
+.hecho {
+  color: var(--texto);
+}
+.hecho .numero {
+  background: var(--exito);
+  border-color: var(--exito);
+  color: var(--texto-inv);
+}
+.linea {
+  width: 90px;
+  height: 2px;
+  background: var(--borde);
+}
+.linea.hecho {
+  background: var(--exito);
+}
+@media (max-width: 600px) {
+  .texto {
+    display: none;
+  }
+  .linea {
+    width: 40px;
+  }
+}

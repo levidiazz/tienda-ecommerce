@@ -1,0 +1,107 @@
+.resultado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  max-width: 640px;
+  padding-top: 72px;
+  padding-bottom: 96px;
+}
+.icono-resultado {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.icono-resultado.exito {
+  background: var(--exito-suave);
+  color: var(--exito);
+}
+.icono-resultado.error {
+  background: var(--error-suave);
+  color: var(--error);
+}
+.detalle {
+  width: 100%;
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+.detalle div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+}
+.detalle dt {
+  color: var(--texto-sec);
+}
+.detalle dd {
+  margin: 0;
+  font-weight: 700;
+}
+.detalle .total {
+  border-top: 1px solid var(--borde);
+  padding-top: 12px;
+  font-size: 17px;
+}
+.acciones {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+.pasos-pago {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+.pasos-pago li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--texto-sec);
+  font-size: 14px;
+}
+.pasos-pago .hecho {
+  color: var(--exito);
+  font-weight: 700;
+}
+.pasos-pago .actual {
+  color: var(--texto);
+  font-weight: 700;
+}
+.enlaces-estado {
+  display: flex;
+  gap: 20px;
+  margin-top: 24px;
+  font-size: 13px;
+}
+.enlaces-estado a {
+  text-decoration: underline;
+  color: var(--texto-sec);
+}
+.detalle-error {
+  width: 100%;
+  text-align: left;
+}
+.sugerencias {
+  text-align: left;
+  color: var(--texto-sec);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 20px;
+  margin: 0;
+}

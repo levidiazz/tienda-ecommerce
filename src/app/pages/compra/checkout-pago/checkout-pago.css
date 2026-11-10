@@ -1,0 +1,42 @@
+.pago {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+legend {
+  margin-bottom: 16px;
+}
+.metodos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.contenido strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.datos-tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.paypal-aviso {
+  display: none;
+}
+.pago:has(input[value="paypal"]:checked) .datos-tarjeta {
+  display: none;
+}
+.pago:has(input[value="paypal"]:checked) .paypal-aviso {
+  display: flex;
+}
+@media (max-width: 700px) {
+  .metodos {
+    grid-template-columns: 1fr;
+  }
+}
